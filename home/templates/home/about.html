@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="p-3">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-6 mx-auto mb-3">
+        <h2>About</h2>
+        <hr />
+        <p>
+           PokéTrade is a nostalgic and interactive web app where you can collect, trade, buy, and sell Pokémon cards.
+          Whether you're a casual collector or a serious trader, PokéTrade makes it easy to grow and manage your collection.
+          Get a random Pokémon when you sign up, explore detailed stats, send trade requests, and browse the marketplace —
+          all in a safe, community-driven space. With a responsive design for all devices and fun features like custom
+          nicknames, PokéTrade brings the excitement of trading Pokémon to your screen!
+        </p>
+        <p>
+          PokéTrade is packed with features to make collecting and trading Pokémon smooth and exciting.
+          Users can create accounts, manage their personal inventories, view detailed Pokédex
+          info, and nickname their Pokémon. You can send and respond to trade requests, track your trade history,
+          and list or buy cards in the marketplace with custom pricing. Admins help keep the community safe by managing
+          listings and users. Plus, everything works seamlessly across devices with a responsive, user-friendly design!
+          
+        </p>
+      </div>
+      <div class="col-md-6 mx-auto mb-3 text-center">
+        <img src="{% static 'img/about.jpg' %}"
+             class="max-width-100"
+             alt="about" />
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
