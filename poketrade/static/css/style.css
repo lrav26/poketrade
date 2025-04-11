@@ -29,5 +29,32 @@
   text-decoration: none;
 }
 .ms-footer-bottom a:hover {
-  color: #fff;
+    color: #fff;
+}
+
+/* This is the formatting for the collections page*/
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.grid-5 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.card h3 small {
+  font-style: italic;
+  color: #666;
 }
