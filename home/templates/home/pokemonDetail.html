@@ -1,0 +1,26 @@
+{{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ pokemon.name }} | PokeTrade</title>
+</head>
+<body>
+  <h1>{{ pokemon.name }}</h1>
+  {% if pokemon.nickname %}
+    <h2 style="color: gray;">“{{ pokemon.nickname }}”</h2>
+  {% endif %}
+  <img src="{{ pokemon.image_url }}" alt="{{ pokemon.name }}">
+  <p><strong>Type:</strong> {{ pokemon.type }}</p>
+  <p><strong>HP:</strong> {{ pokemon.hp }}</p>
+  <p><strong>Attack:</strong> {{ pokemon.attack }}</p>
+
+  <h3>Give a Nickname:</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.nickname }}
+    <button type="submit">Save</button>
+  </form>
+
+  <p><a href="{% url 'collection' %}">← Back to Collection</a></p>
+</body>
+</html>
