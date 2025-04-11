@@ -31,3 +31,16 @@
 .ms-footer-bottom a:hover {
   color: #fff;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+main {
+    flex-grow: 1;
+}
