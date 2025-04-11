@@ -59,29 +59,26 @@ def login(request):
 
 def signup(request):
     template_data = {'title': 'Sign Up'}
+
     if request.method == 'GET':
         template_data['form'] = CustomUserCreationForm()
         return render(request, 'accounts/signup.html', {'template_data': template_data})
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
+            user = form.save(commit=False)
 
-            # 🚫 Banned check after signup
+            # 🚫 Banned check before logging in
             if hasattr(user, 'profile') and user.profile.is_banned:
-                auth_logout(request)
                 template_data['error'] = 'Your account has been banned.'
-                template_data['form'] = CustomUserCreationForm()
+                template_data['form'] = form
                 return render(request, 'accounts/signup.html', {'template_data': template_data})
 
+            user.save()
+            auth_login(request, user)
             return redirect('home.index')
 
-        else:
-            template_data['form'] = form  # Pass the form with errors back to the template
-    else:
-        form = CustomUserCreationForm()  # Display empty form for GET requests
+        # If form is invalid, fall through to re-render form with errors
         template_data['form'] = form
-
-    return render(request, 'accounts/signup.html', {'template_data': template_data})
+        return render(request, 'accounts/signup.html', {'template_data': template_data})
