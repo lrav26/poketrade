@@ -42,7 +42,7 @@
     <h2>Your Pokémon Collection</h2>
     <div class="grid-5">
   {% for p in pokemons %}
-    <a href="{% url 'pokemon_detail' p.id %}" style="text-decoration: none; color: inherit;">
+    <a href="{% url 'pokemonDetail' p.id %}" style="text-decoration: none; color: inherit;">
       <div class="card">
         <img src="{{ p.image_url }}" alt="{{ p.name }}">
         <h3>
