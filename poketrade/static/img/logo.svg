@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 833 125" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="Artboard2" transform="matrix(8.32551,0,0,1,-1248.83,0)">
+        <rect x="150" y="0" width="100" height="125" style="fill:none;"/>
+        <g transform="matrix(0.120113,0,0,1,147.965,40.4627)">
+            <text x="33.65px" y="75.893px" style="font-family:'Axiforma-Heavy', 'Axiforma';font-weight:950;font-size:144px;fill:white;">P</text>
+            <g transform="matrix(144,0,0,144,826.874,75.8933)">
+            </g>
+            <text x="216.026px" y="75.893px" style="font-family:'Axiforma-Heavy', 'Axiforma';font-weight:950;font-size:144px;fill:white;">k<tspan x="300.41px 380.618px 471.05px 535.706px " y="75.893px 75.893px 75.893px 75.893px ">eTra</tspan>de</text>
+        </g>
+        <g transform="matrix(0.120113,0,0,1,152.501,0)">
+            <path d="M136.494,89.15C143.382,89.15 149.072,84.023 149.957,77.378L177.243,77.378C177.243,88.185 172.95,96.739 165.308,104.38C157.666,112.022 147.301,116.315 136.494,116.315C125.687,116.315 115.323,112.022 107.681,104.38C100.039,96.739 95.746,88.185 95.746,77.378L123.031,77.378C123.917,84.023 129.607,89.15 136.494,89.15Z" style="fill:white;"/>
+        </g>
+        <g transform="matrix(0.120113,0,0,1,152.501,0)">
+            <path d="M165.308,46.754C172.95,54.395 177.243,62.949 177.243,73.756L149.957,73.756C149.072,67.111 143.382,61.984 136.494,61.984C129.607,61.984 123.917,67.111 123.031,73.756L95.746,73.756C95.746,62.949 100.039,54.395 107.681,46.754C115.323,39.112 125.687,34.819 136.494,34.819C147.301,34.819 157.666,39.112 165.308,46.754Z" style="fill:rgb(255,0,0);"/>
+        </g>
+        <g transform="matrix(0.120113,0,0,1,152.501,0)">
+            <path d="M136.494,85.528C130.993,85.528 126.534,81.068 126.534,75.567C126.534,70.066 130.993,65.606 136.494,65.606C141.996,65.606 146.455,70.066 146.455,75.567C146.455,81.068 141.996,85.528 136.494,85.528Z" style="fill:white;"/>
+        </g>
+    </g>
+</svg>
