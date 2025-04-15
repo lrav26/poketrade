@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 
+from poketrade.settings import LOGIN_REDIRECT_URL
 # Create your views here.
 from .forms import CustomUserCreationForm, CustomErrorList
 
@@ -55,7 +56,7 @@ def login(request):
             template_data['error'] = 'Your account has been banned.'
             return render(request, 'accounts/login.html', {'template_data': template_data})
 
-        return redirect('home.index')
+        return redirect(LOGIN_REDIRECT_URL)
 
 def signup(request):
     template_data = {'title': 'Sign Up'}
@@ -77,7 +78,7 @@ def signup(request):
 
             user.save()
             auth_login(request, user)
-            return redirect('home.index')
+            return redirect(LOGIN_REDIRECT_URL)
 
         # If form is invalid, fall through to re-render form with errors
         template_data['form'] = form
