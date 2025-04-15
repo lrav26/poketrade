@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Pokemon
 from django.shortcuts import get_object_or_404
 from .forms import NicknameForm
+from django.contrib.auth.decorators import login_required
+
 def index(request):
     template_data = {}
     template_data['title'] = 'PokeTrade'
@@ -13,14 +15,17 @@ def about(request):
     return render(request, 'home/about.html',
                   {'template_data': template_data})
 
+@login_required
 def collection(request):
-    pokemons = Pokemon.objects.all()
+    pokemons = Pokemon.objects.filter(user=request.user)
     return render(request, 'home/collection.html', {
         'pokemons': pokemons,
-        'title': 'Collection'})
+        'title': 'Collection'
+    })
 
+@login_required
 def pokemon_detail(request, id):
-    pokemon = get_object_or_404(Pokemon, id=id)
+    pokemon = get_object_or_404(Pokemon, id=id, user=request.user)
 
     if request.method == 'POST':
         form = NicknameForm(request.POST, instance=pokemon)

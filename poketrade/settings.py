@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-u4%e+s_s7!#0s*d@qwmrkoq4)-g90cuc)b6ik#1zsbk=eeh9rn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-LOGIN_REDIRECT_URL = 'login'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/collection/'
 LOGOUT_REDIRECT_URL = 'login'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
