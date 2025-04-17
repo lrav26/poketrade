@@ -48,6 +48,8 @@ main {
   color: #fff;
 }
 
+/* --- Grid and Card Styles --- */
+
 .grid-5 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -79,43 +81,48 @@ main {
 .card-front, .card-back {
   background: white;
   border: 2px solid #ddd;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 1rem;
   backface-visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* <-- must be 100% not 10% */
-  height: 100%; /* <-- must be 100% not 10% */
-  box-shadow: 0 0 12px rgba(106, 180, 62, 0.3);
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   color: black;
   text-align: center;
 }
 
 .card-front {
-  z-index: 2;
+  background: linear-gradient(to bottom right, #f9f6d8, #f5e7a1);
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 0.8rem;
+  backface-visibility: hidden;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow: hidden;
 }
 
 .card-back {
   transform: rotateY(180deg);
-  <div class="nickname-form mt-2">
-  <form method="POST" action="{% url 'nickname_update' p.id %}">
-    {% csrf_token %}
-    <input type="text" name="nickname" placeholder="New nickname" class="nickname-input" maxlength="20">
-    <button type="submit" class="btn btn-sm btn-outline-success mt-1">Save</button>
-  </form>
-</div>
 }
 
 .pokemon-img {
-  max-width: 100%;
-  height: 150px;
+  max-width: 80%;
+  height: 120px;
   object-fit: contain;
-  border: 2px solid #6ab43e;
-  border-radius: 8px;
-  box-shadow: 0 0 12px rgba(106, 180, 62, 0.5);
+  margin-top: 10px;
+  border: none;
+  box-shadow: none;
 }
 
+/* Nickname Form Small */
 .nickname-form {
   margin-top: 1rem;
 }
@@ -126,4 +133,18 @@ main {
   font-size: 0.8rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+/* Card Front Text Styling */
+.card-front h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #444;
+}
+
+.card-front small {
+  font-style: italic;
+  color: #666;
+  font-size: 0.8rem;
 }
