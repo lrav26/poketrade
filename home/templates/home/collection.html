@@ -12,24 +12,42 @@
   </a>
 </div>
 
+{% if user.is_superuser %}
+<!-- Add Pokémon Form: Only visible to admins -->
+<div class="mb-5">
+  <form method="POST" class="d-flex align-items-center gap-3">
+    {% csrf_token %}
+    <label for="pokemon_id" class="form-label mb-0" style="color: #3b3e47;">Add Pokémon by ID:</label>
+    <input type="number" name="pokemon_id" id="pokemon_id" min="1" max="898" required class="form-control" style="max-width: 100px;">
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>
+{% endif %}
+
+<!-- Pokémon Grid -->
 <div class="grid-5">
   {% for p in pokemons %}
-    <a href="{% url 'pokemonDetail' p.id %}" style="text-decoration: none; color: inherit;">
-      <div class="card">
-        <img src="{{ p.image_url }}" alt="{{ p.name }}">
-        <h3>
-          {{ p.name }}
-          {% if p.nickname %}
-            <br><small>“{{ p.nickname }}”</small>
-          {% endif %}
-        </h3>
-        <p>
-          <strong>Type:</strong> {{ p.type }}<br>
-          <strong>HP:</strong> {{ p.hp }}<br>
-          <strong>Attack:</strong> {{ p.attack }}
-        </p>
+    <div class="card-container">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
+          <h5 class="mt-2">
+            {{ p.name }}
+            {% if p.nickname %}
+              <br><small>“{{ p.nickname }}”</small>
+            {% endif %}
+          </h5>
+        </div>
+        <div class="card-back">
+          <h5>{{ p.name }}'s Stats</h5>
+          <p>
+            <strong>Type:</strong> {{ p.type }}<br>
+            <strong>HP:</strong> {{ p.hp }}<br>
+            <strong>Attack:</strong> {{ p.attack }}
+          </p>
+        </div>
       </div>
-    </a>
+    </div>
   {% endfor %}
 </div>
 {% endblock %}

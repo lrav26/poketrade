@@ -1,9 +1,25 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .utils import fetch_six_random_pokemon
+
+@receiver(post_save, sender=User)
+def give_new_user_pokemon(sender, instance, created, **kwargs):
+    if created:
+        pokemons = fetch_six_random_pokemon()
+        for poke in pokemons:
+            Pokemon.objects.create(
+                user=instance,
+                name=poke["name"],
+                type=poke["type"],
+                hp=poke["hp"],
+                attack=poke["attack"],
+                image_url=poke["image_url"]
+            )
+
 
 class Pokemon(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pokemons',
-                             default=1)  # 1 could be the ID of a default user, such as the admin
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pokemons')
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
