@@ -45,6 +45,17 @@
             <strong>HP:</strong> {{ p.hp }}<br>
             <strong>Attack:</strong> {{ p.attack }}
           </p>
+
+          <!-- Nickname Form -->
+          <div class="nickname-form mt-2">
+            <form method="POST" action="{% url 'nickname_update' p.id %}">
+              {% csrf_token %}
+              <input type="text" name="nickname" placeholder="New nickname" class="nickname-input" maxlength="20">
+              <button type="submit" class="btn btn-sm btn-outline-success mt-1">Save</button>
+            </form>
+          </div>
+          <!-- End Nickname Form -->
+
         </div>
       </div>
     </div>

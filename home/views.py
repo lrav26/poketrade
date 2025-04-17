@@ -57,3 +57,11 @@ def pokemon_detail(request, id):
         'pokemon': pokemon,
         'form': form
     })
+
+def nickname_update(request, pk):
+    if request.method == "POST":
+        pokemon = get_object_or_404(Pokemon, id=pk, user=request.user)
+        new_nickname = request.POST.get('nickname', '').strip()
+        pokemon.nickname = new_nickname
+        pokemon.save()
+    return redirect('collection')

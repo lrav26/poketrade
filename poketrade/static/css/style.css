@@ -98,6 +98,13 @@ main {
 
 .card-back {
   transform: rotateY(180deg);
+  <div class="nickname-form mt-2">
+  <form method="POST" action="{% url 'nickname_update' p.id %}">
+    {% csrf_token %}
+    <input type="text" name="nickname" placeholder="New nickname" class="nickname-input" maxlength="20">
+    <button type="submit" class="btn btn-sm btn-outline-success mt-1">Save</button>
+  </form>
+</div>
 }
 
 .pokemon-img {
@@ -107,4 +114,16 @@ main {
   border: 2px solid #6ab43e;
   border-radius: 8px;
   box-shadow: 0 0 12px rgba(106, 180, 62, 0.5);
+}
+
+.nickname-form {
+  margin-top: 1rem;
+}
+
+.nickname-input {
+  width: 100%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
