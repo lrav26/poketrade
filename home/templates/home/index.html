@@ -3,13 +3,19 @@
 {% block content %}
 <div class="hero-section">
   <img src="{% static 'img/home-wallpaper.jpg' %}" alt="Hero image" class="hero-image">
-  <div class="hero-overlay">
+  <div class="hero-overlay d-flex flex-column align-items-center">
     <h1>Welcome to PokéTrade!</h1>
+    {% if not user.is_authenticated %}
+      <div class="mt-4">
+        <a href="{% url 'accounts.login' %}" class="btn btn-primary btn-lg me-2 px-4">Log In</a>
+        <a href="{% url 'accounts.signup' %}" class="btn btn-outline-light btn-lg px-4">Sign Up</a>
+      </div>
+    {% endif %}
   </div>
 </div>
 <div class="p-3">
   <div class="container">
-      <div class="row text-center mt-4 text-white g-3">
+    <div class="row text-center mt-4 text-white g-3">
       <div class="col-md-4 mb-4 custom-bg-1 p-3">
         <h5>Trade Your Favorites</h5>
         <p>Easily trade Pokémon with friends and players around the world.</p>
