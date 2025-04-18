@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h2 class="card-title text-center mb-3">List {{ pokemon.name }} for Sale</h2>
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="price" class="form-label">Price (in $):</label>
+            <input type="number" name="price" id="price" step="0.01" min="0" required class="form-control">
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Create Listing</button>
+            <a href="{% url 'collection' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
