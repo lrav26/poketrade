@@ -37,6 +37,7 @@
           <div class="ms-auto d-flex navbar-nav align-items-center gap-3">
             <a class="nav-link" href="{% url 'home.about' %}">About</a>
             {% if user.is_authenticated %}
+              <a class="nav-link" href="{% url 'collection' %}">Collection</a>
               <a class="nav-link" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
             {% else %}
               <a class="nav-link" href="{% url 'accounts.login' %}">Login</a>
@@ -59,7 +60,7 @@
                     <b>LINKS</b>
                     <hr />
                     <p>
-                        Link 1
+                        Collection
                     </p>
                     <p>
                         Link 2
