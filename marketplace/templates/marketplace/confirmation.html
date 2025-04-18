@@ -1,0 +1,7 @@
+<h1>Confirm Purchase</h1>
+<p>Are you sure you want to buy {{ listing.pokemon.name }} for ${{ listing.price }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm Purchase</button>
+</form>

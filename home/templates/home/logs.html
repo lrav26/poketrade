@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>My Transaction History</h1>
+
+<ul class="list-group">
+    {% for transaction in transaction_logs %}
+        <li class="list-group-item">
+            <strong>{{ transaction.transaction_type|title }}</strong> - 
+            {{ transaction.pokemon.name }} - 
+            ${{ transaction.price }} - 
+            {{ transaction.timestamp }}
+        </li>
+    {% empty %}
+        <p>No transactions yet.</p>
+    {% endfor %}
+</ul>
+{% endblock content %}

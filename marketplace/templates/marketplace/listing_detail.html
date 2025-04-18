@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card text-center">
+        <img src="{{ listing.pokemon.image_url }}" class="card-img-top p-3" alt="{{ listing.pokemon.name }}" style="height: 300px; object-fit: contain;">
+        <div class="card-body">
+          <h2 class="card-title">{{ listing.pokemon.name }}</h2>
+          <p class="card-text"><strong>Seller:</strong> {{ listing.seller.username }}</p>
+          <p class="card-text"><strong>Price:</strong> ${{ listing.price }}</p>
+
+          <form method="post" action="{% url 'buy_pokemon' listing.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success mt-2">Buy Now</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-4 text-center">
+        <a href="{% url 'marketplace_home' %}" class="btn btn-outline-secondary">← Back to Marketplace</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

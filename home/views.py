@@ -5,6 +5,8 @@ from .forms import NicknameForm
 from django.contrib.auth.decorators import login_required
 from .utils import fetch_random_pokemon
 import requests
+from marketplace.models import TransactionHistory
+
 
 def index(request):
     template_data = {}
@@ -38,7 +40,8 @@ def collection(request):
                 print("Error adding Pokémon:", e)
         return redirect("collection")
 
-    pokemons = request.user.pokemons.all()
+    pokemons = Pokemon.objects.filter(user=request.user)
+    #pokemons = request.user.pokemons.all()
     return render(request, "home/collection.html", {"pokemons": pokemons})
 
 @login_required
@@ -65,3 +68,8 @@ def nickname_update(request, pk):
         pokemon.nickname = new_nickname
         pokemon.save()
     return redirect('collection')
+
+@login_required
+def logs(request):
+    transaction_logs = TransactionHistory.objects.filter(user=request.user).order_by('-timestamp')
+    return render(request, 'home/logs.html', {'transaction_logs': transaction_logs})
