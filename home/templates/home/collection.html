@@ -7,9 +7,9 @@
 </div>
 
 <div class="mb-4">
-  <a href="{% url 'home.index' %}" class="nav-link px-0" style="font-size: 1rem; color: #555d63; text-decoration: underline;">
-    ← Back to Home
-  </a>
+    <a href="{% url 'home.index' %}" style="font-size: 1rem; color: #555d63; text-decoration: underline;">
+      ← Back to Home
+    </a>
 </div>
 
 {% if user.is_superuser %}
@@ -54,7 +54,7 @@
               <button type="submit" class="btn btn-sm btn-outline-success mt-1">Save</button>
             </form>
           </div>
-</div>
+        </div>
       </div>
     </div>
   {% endfor %}

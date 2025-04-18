@@ -5,6 +5,7 @@ from .forms import NicknameForm
 from django.contrib.auth.decorators import login_required
 from .utils import fetch_random_pokemon
 import requests
+from django.http import JsonResponse
 
 def index(request):
     template_data = {}
@@ -58,10 +59,21 @@ def pokemon_detail(request, id):
         'form': form
     })
 
-def nickname_update(request, pk):
-    if request.method == "POST":
-        pokemon = get_object_or_404(Pokemon, id=pk, user=request.user)
+def nickname_update(request, pokemon_id):
+    if request.method == 'POST':
+        # Fetch the correct Pokémon for the current user
+        pokemon = get_object_or_404(Pokemon, id=pokemon_id, user=request.user)
+
+        # Get the new nickname from the form
         new_nickname = request.POST.get('nickname', '').strip()
         pokemon.nickname = new_nickname
         pokemon.save()
+
+        # If the request was AJAX, don't redirect
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success'})
+
+        # Otherwise, normal POST (fallback)
+        return redirect('collection')
+
     return redirect('collection')
