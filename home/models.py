@@ -28,5 +28,8 @@ class Pokemon(models.Model):
     image_url = models.URLField()
     nickname = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Pokemon"
+
     def __str__(self):
         return self.nickname or self.name
