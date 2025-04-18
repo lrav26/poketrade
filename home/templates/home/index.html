@@ -13,21 +13,66 @@
     {% endif %}
   </div>
 </div>
-<div class="p-3">
+
+<div class="p-5">
   <div class="container">
-    <div class="row text-center mt-4 text-white g-3">
-      <div class="col-md-4 mb-4 custom-bg-1 p-3">
-        <h5>Trade Your Favorites</h5>
-        <p>Easily trade Pokémon with friends and players around the world.</p>
-      </div>
-      <div class="col-md-4 mb-4 custom-bg-1 p-3">
-        <h5>Track Your Collection</h5>
-        <p>Keep tabs on your Pokédex progress and rare finds.</p>
-      </div>
-      <div class="col-md-4 mb-4 custom-bg-1 p-3">
-        <h5>Compete in Events</h5>
-        <p>Join tournaments, win rewards, and show off your team!</p>
-      </div>
+    <div class="row text-center g-4">
+      {% if user.is_authenticated %}
+        <!-- Content for logged-in users -->
+        <div class="col-md-4">
+          <div class="card custom-bg-1 text-white h-100 p-4">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title mb-4">My Collection</h4>
+              <p class="card-text flex-grow-1">View and manage your Pokémon collection</p>
+              <a href="{% url 'collection' %}" class="btn btn-primary btn-lg mt-auto">View Collection</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card custom-bg-1 text-white h-100 p-4">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title mb-4">Trade Center</h4>
+              <p class="card-text flex-grow-1">Create and respond to trade offers</p>
+              <a href="#" class="btn btn-primary btn-lg mt-auto">Trade Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card custom-bg-1 text-white h-100 p-4">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title mb-4">Events</h4>
+              <p class="card-text flex-grow-1">Check out ongoing tournaments and events</p>
+              <a href="#" class="btn btn-primary btn-lg mt-auto">View Events</a>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <!-- Content for logged-out users -->
+        <div class="col-md-4">
+          <div class="card custom-bg-1 text-white h-100 p-4">
+            <div class="card-body">
+              <h4 class="mb-4">Trade Your Favorites</h4>
+              <p>Easily trade Pokémon with friends and players around the world. Build your collection and find rare cards!</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card custom-bg-1 text-white h-100 p-4">
+            <div class="card-body">
+              <h4 class="mb-4">Track Your Collection</h4>
+              <p>Keep tabs on your Pokédex progress and rare finds. Organize and showcase your best Pokémon!</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card custom-bg-1 text-white h-100 p-4">
+            <div class="card-body">
+              <h4 class="mb-4">Compete in Events</h4>
+              <p>Join tournaments, win rewards, and show off your team! Participate in special trading events!</p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>
