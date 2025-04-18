@@ -31,14 +31,14 @@
       <div class="card-inner">
 
         <!-- Card Front -->
-        <div class="card-front">
+        <div class="card-front type-{{ p.type|lower }}">
           <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
-          <h5 class="mt-2">
-            {{ p.name }}
-            {% if p.nickname %}
-              <br><small>“{{ p.nickname }}”</small>
-            {% endif %}
-          </h5>
+          <div class="pokemon-text">
+          <div class="pokemon-name">{{ p.name }}</div>
+              {% if p.nickname %}
+                <div class="pokemon-nickname">“{{ p.nickname }}”</div>
+              {% endif %}
+          </div>
         </div>
 
         <!-- Card Back -->
