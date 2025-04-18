@@ -8,7 +8,7 @@ from django.contrib import messages
 
 @login_required
 def marketplace_home(request):
-    listings = MarketplaceListing.objects.filter(is_active=True).exclude(seller=request.user)
+    listings = MarketplaceListing.objects.filter(is_active=True)
     return render(request, 'marketplace/marketplace_home.html', {'listings': listings})
 
 
