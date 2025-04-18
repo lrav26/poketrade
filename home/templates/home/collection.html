@@ -30,21 +30,21 @@
     <div class="card-container">
       <div class="card-inner">
         <div class="card-front">
-          <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
-          <h5 class="mt-2">
-            {{ p.name }}
-            {% if p.nickname %}
-              <br><small>“{{ p.nickname }}”</small>
-            {% endif %}
-          </h5>
+          <div class="type-inner type-{{ p.type|lower }}">
+            <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
+            <h5 class="mt-2">
+              {{ p.name }}
+              {% if p.nickname %}
+                <br><small>“{{ p.nickname }}”</small>
+              {% endif %}
+            </h5>
+          </div>
         </div>
         <div class="card-back">
           <h5>{{ p.name }}'s Stats</h5>
-          <p>
-            <strong>Type:</strong> {{ p.type }}<br>
-            <strong>HP:</strong> {{ p.hp }}<br>
-            <strong>Attack:</strong> {{ p.attack }}
-          </p>
+          <p><span class="stat-icon">🔮</span> <strong>Type:</strong> {{ p.type }}</p>
+          <p><span class="stat-icon">❤️</span> <strong>HP:</strong> {{ p.hp }}</p>
+          <p><span class="stat-icon">⚔️</span> <strong>Attack:</strong> {{ p.attack }}</p>
 
           <!-- Nickname Form -->
           <div class="nickname-form mt-2">
@@ -54,9 +54,7 @@
               <button type="submit" class="btn btn-sm btn-outline-success mt-1">Save</button>
             </form>
           </div>
-          <!-- End Nickname Form -->
-
-        </div>
+</div>
       </div>
     </div>
   {% endfor %}

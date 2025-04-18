@@ -1,3 +1,5 @@
+/* --- Base Styles --- */
+
 .bg-index {
   background: url("/static/img/background.jpg") no-repeat fixed;
   background-size: 100% auto;
@@ -50,21 +52,24 @@ main {
 
 /* --- Grid and Card Styles --- */
 
+/* --- Collection Grid --- */
 .grid-5 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 2rem;
   justify-items: center;
+  margin-top: 2rem;
 }
 
+/* --- Card Container: Handles Perspective and Hover --- */
 .card-container {
-  perspective: 1000px;
+  perspective: 1200px;
   width: 220px;
-  height: 300px;
-  position: relative;
+  height: 320px;
   cursor: pointer;
 }
 
+/* --- Card Inner: Handles Flipping --- */
 .card-inner {
   position: relative;
   width: 100%;
@@ -72,79 +77,294 @@ main {
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
   transform-origin: center;
+  transform: rotateY(0deg) translateY(0px);
 }
 
 .card-container:hover .card-inner {
-  transform: rotateY(180deg) translateY(-10px) scale(1.03);
+  transform: rotateY(180deg) translateY(-5px);
+}
+.card-container:hover .shimmer-layer {
+  animation: goldShimmer 1.5s infinite;
 }
 
+/* --- Card Faces --- */
 .card-front, .card-back {
-  background: white;
-  border: 2px solid #ddd;
-  border-radius: 15px;
-  padding: 1rem;
-  backface-visibility: hidden;
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  color: black;
-  text-align: center;
-}
-
-.card-front {
-  background: linear-gradient(to bottom right, #f9f6d8, #f5e7a1);
-  border: 2px solid gold;
-  border-radius: 15px;
-  padding: 0.8rem;
   backface-visibility: hidden;
-  position: relative;
-  z-index: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
-  overflow: hidden;
+  justify-content: center;
 }
 
+/* --- Card Front Face --- */
+.card-front {
+  background: none;
+  border: 5px solid gold;
+  padding: 0px;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+/* --- Card Back Face --- */
 .card-back {
+  background: lightgrey;
+  padding: 1rem;
   transform: rotateY(180deg);
+  border: 5px solid gold;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+
+  flex-shrink: 0;
+  transform-style: preserve-3d;
+}
+/* --- Type Colored Inner Layer (Inside Front) --- */
+.type-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
+/* --- Pokemon Image --- */
 .pokemon-img {
-  max-width: 80%;
-  height: 120px;
+  width: 80%;
+  height: 130px;
   object-fit: contain;
-  margin-top: 10px;
-  border: none;
-  box-shadow: none;
+  margin-bottom: 10px;
 }
 
-/* Nickname Form Small */
+/* --- Text Styling on Front --- */
+.type-inner h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.type-inner small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* --- Nickname Form on Back --- */
 .nickname-form {
   margin-top: 1rem;
+  width: 100%;
 }
 
 .nickname-input {
   width: 100%;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.8rem;
+  padding: 0.4rem;
+  font-size: 0.85rem;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-/* Card Front Text Styling */
-.card-front h5 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 0.5rem;
-  color: #444;
+/* ==================== TYPE-SPECIFIC BACKGROUNDS ==================== */
+
+/* --- Fire --- */
+.type-fire {
+  background: linear-gradient(135deg, #f12711, #f5af19);
+}
+.type-fire:hover {
+  box-shadow: 0 0 15px #f5af19;
 }
 
-.card-front small {
-  font-style: italic;
-  color: #666;
-  font-size: 0.8rem;
+/* --- Water --- */
+.type-water {
+  background: linear-gradient(135deg, #36D1DC, #5B86E5);
+}
+.type-water:hover {
+  box-shadow: 0 0 15px #5B86E5;
+}
+
+/* --- Grass --- */
+.type-grass {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+.type-grass:hover {
+  box-shadow: 0 0 15px #38ef7d;
+}
+
+/* --- Electric --- */
+.type-electric {
+  background: linear-gradient(135deg, #FCE38A, #F38181);
+  color: #333;
+}
+.type-electric:hover {
+  box-shadow: 0 0 15px #FCE38A;
+}
+
+/* --- Psychic --- */
+.type-psychic {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+}
+.type-psychic:hover {
+  box-shadow: 0 0 15px #fbc2eb;
+}
+
+/* --- Ice --- */
+.type-ice {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+}
+.type-ice:hover {
+  box-shadow: 0 0 15px #c2e9fb;
+}
+
+/* --- Dragon --- */
+.type-dragon {
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+}
+.type-dragon:hover {
+  box-shadow: 0 0 15px #4b6cb7;
+}
+
+/* --- Dark --- */
+.type-dark {
+  background: linear-gradient(135deg, #232526, #414345);
+}
+.type-dark:hover {
+  box-shadow: 0 0 15px #414345;
+}
+
+/* --- Fairy --- */
+.type-fairy {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+.type-fairy:hover {
+  box-shadow: 0 0 15px #fad0c4;
+}
+
+/* --- Bug --- */
+.type-bug {
+  background: linear-gradient(135deg, #56ab2f, #a8e063);
+}
+.type-bug:hover {
+  box-shadow: 0 0 15px #a8e063;
+}
+
+/* --- Rock --- */
+.type-rock {
+  background: linear-gradient(135deg, #b79891, #94716b);
+}
+.type-rock:hover {
+  box-shadow: 0 0 15px #94716b;
+}
+
+/* --- Steel --- */
+.type-steel {
+  background: linear-gradient(135deg, #7f8c8d, #bdc3c7);
+}
+.type-steel:hover {
+  box-shadow: 0 0 15px #bdc3c7;
+}
+
+/* --- Ghost --- */
+.type-ghost {
+  background: linear-gradient(135deg, #5f2c82, #49a09d);
+}
+.type-ghost:hover {
+  box-shadow: 0 0 15px #5f2c82;
+}
+
+/* --- Poison --- */
+.type-poison {
+  background: linear-gradient(135deg, #9d50bb, #6e48aa);
+}
+.type-poison:hover {
+  box-shadow: 0 0 15px #9d50bb;
+}
+
+/* --- Ground --- */
+.type-ground {
+  background: linear-gradient(135deg, #ba8b02, #181818);
+}
+.type-ground:hover {
+  box-shadow: 0 0 15px #ba8b02;
+}
+
+/* --- Fighting --- */
+.type-fighting {
+  background: linear-gradient(135deg, #c94b4b, #4b134f);
+}
+.type-fighting:hover {
+  box-shadow: 0 0 15px #c94b4b;
+}
+
+/* --- Flying --- */
+.type-flying {
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+}
+.type-flying:hover {
+  box-shadow: 0 0 15px #66a6ff;
+}
+
+/* --- Normal --- */
+.type-normal {
+  background: linear-gradient(135deg, #d3cce3, #e9e4f0);
+}
+.type-normal:hover {
+  box-shadow: 0 0 15px #d3cce3;
+}
+
+/* --- Default fallback --- */
+.type-inner:not([class*="type-"]) {
+  background: #f0f0f0;
+}
+
+.card-back h5 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  text-align: center;
+}
+
+.card-back p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.25rem 0;
+  text-align: center;
+}
+.card-back h5, .card-back p {
+  width: 100%;
+  text-align: center;
+}
+
+@keyframes goldShimmer {
+  0% {
+    border-color: gold;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    border-color: #ffd700; /* richer gold */
+    box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    border-color: gold;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+}
+.card-container:hover .card-front,
+.card-container:hover .card-back {
+  animation: goldShimmer 1.5s infinite;
 }
