@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<header class="masthead bg-index text-black text-center py-4">
-  <div class="container d-flex align-items-center flex-column pt-2">
-    <h2>PokeTrade</h2>
-    <p>Are you ready to collect them all?</p>
+<div class="hero-section">
+  <img src="{% static 'img/about.png' %}" alt="Hero image" class="hero-image">
+  <div class="hero-overlay">
+    <h1>Welcome to PokéTrade!</h1>
   </div>
-</header>
+</div>
 <div class="p-3">
   <div class="container">
-    <div class="row mt-3">
-      <div class="col mx-auto text-center mb-3">
-        <h4>Welcome to the best Pokemon Trading App!</h4>
+      <div class="row text-center mt-4 text-white g-3">
+      <div class="col-md-4 mb-4 custom-bg-1 p-3">
+        <h5>Trade Your Favorites</h5>
+        <p>Easily trade Pokémon with friends and players around the world.</p>
+      </div>
+      <div class="col-md-4 mb-4 custom-bg-1 p-3">
+        <h5>Track Your Collection</h5>
+        <p>Keep tabs on your Pokédex progress and rare finds.</p>
+      </div>
+      <div class="col-md-4 mb-4 custom-bg-1 p-3">
+        <h5>Compete in Events</h5>
+        <p>Join tournaments, win rewards, and show off your team!</p>
       </div>
     </div>
   </div>

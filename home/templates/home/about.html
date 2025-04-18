@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+
+<!-- Full-width hero image section -->
+<div class="hero-section">
+  <img src="{% static 'img/about.png' %}" alt="Hero image" class="hero-image">
+  <div class="hero-overlay">
+    <h1>About PokéTrade</h1>
+  </div>
+</div>
+
 <div class="p-3">
   <div class="container">
     <div class="row mt-3">
@@ -8,7 +17,7 @@
         <h2>About</h2>
         <hr />
         <p>
-           PokéTrade is a nostalgic and interactive web app where you can collect, trade, buy, and sell Pokémon cards.
+          PokéTrade is a nostalgic and interactive web app where you can collect, trade, buy, and sell Pokémon cards.
           Whether you're a casual collector or a serious trader, PokéTrade makes it easy to grow and manage your collection.
           Get a random Pokémon when you sign up, explore detailed stats, send trade requests, and browse the marketplace —
           all in a safe, community-driven space. With a responsive design for all devices and fun features like custom
@@ -20,7 +29,6 @@
           info, and nickname their Pokémon. You can send and respond to trade requests, track your trade history,
           and list or buy cards in the marketplace with custom pricing. Admins help keep the community safe by managing
           listings and users. Plus, everything works seamlessly across devices with a responsive, user-friendly design!
-          
         </p>
       </div>
       <div class="col-md-6 mx-auto mb-3 text-center">

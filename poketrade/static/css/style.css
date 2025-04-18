@@ -72,3 +72,46 @@ main {
   font-style: italic;
   color: #666;
 }
+
+.custom-bg-1 {
+  background-color: #000000; /* light gray */
+}
+.custom-bg-2 {
+  background-color: #ff0000; /* Bootstrap blue */
+  color: white;
+}
+.custom-bg-3 {
+  background-color: #ffc107; /* Bootstrap yellow */
+}
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 70vh; /* Adjustable height, 70% of viewport height */
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3); /* Optional: adds a slight dark overlay */
+}
+
+.hero-overlay h1 {
+    color: white;
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
