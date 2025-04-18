@@ -1,87 +1,64 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pokémon Collection</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-  <style>
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    .card img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-    }
-    .grid-5 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-    }
-  </style>
-</head>
 
-<body>
-  <nav class="container-fluid">
-    <ul>
-      <li><strong>PokéTrade</strong></li>
-    </ul>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Collection</a></li>
-      <li><a href="#" role="button">Logout</a></li>
-    </ul>
-  </nav>
-  <main class="container">
-    <h2>Your Pokémon Collection</h2>
-    <div class="grid-5">
+{% block content %}
+<div class="mb-4 mt-4">
+  <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">Your Collection</h1>
+</div>
+
+<div class="mb-4">
+  <a href="{% url 'home.index' %}" class="nav-link px-0" style="font-size: 1rem; color: #555d63; text-decoration: underline;">
+    ← Back to Home
+  </a>
+</div>
+
+{% if user.is_superuser %}
+<!-- Add Pokémon Form: Only visible to admins -->
+<div class="mb-5">
+  <form method="POST" class="d-flex align-items-center gap-3">
+    {% csrf_token %}
+    <label for="pokemon_id" class="form-label mb-0" style="color: #3b3e47;">Add Pokémon by ID:</label>
+    <input type="number" name="pokemon_id" id="pokemon_id" min="1" max="898" required class="form-control" style="max-width: 100px;">
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+</div>
+{% endif %}
+
+<!-- Pokémon Grid -->
+<div class="grid-5">
   {% for p in pokemons %}
-    <a href="{% url 'pokemon_detail' p.id %}" style="text-decoration: none; color: inherit;">
-      <div class="card">
-        <img src="{{ p.image_url }}" alt="{{ p.name }}">
-        <h3>
-          {{ p.name }}
-          {% if p.nickname %}
-            <br><small>“{{ p.nickname }}”</small>
-          {% endif %}
-        </h3>
-        <p>
+    <div class="card-container">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
+          <h5 class="mt-2">
+            {{ p.name }}
+            {% if p.nickname %}
+              <br><small>“{{ p.nickname }}”</small>
+            {% endif %}
+          </h5>
+        </div>
+        <div class="card-back">
+          <h5>{{ p.name }}'s Stats</h5>
+          <p>
+            <strong>Type:</strong> {{ p.type }}<br>
+            <strong>HP:</strong> {{ p.hp }}<br>
+            <strong>Attack:</strong> {{ p.attack }}
+          </p>
 
-          <strong>Type:</strong> {{ p.type }}<br>
-          <strong>HP:</strong> {{ p.hp }}<br>
-          <strong>Attack:</strong> {{ p.attack }}
-        </p>
+          <!-- Nickname Form -->
+          <div class="nickname-form mt-2">
+            <form method="POST" action="{% url 'nickname_update' p.id %}">
+              {% csrf_token %}
+              <input type="text" name="nickname" placeholder="New nickname" class="nickname-input" maxlength="20">
+              <button type="submit" class="btn btn-sm btn-outline-success mt-1">Save</button>
+            </form>
+          </div>
+          <!-- End Nickname Form -->
+
+        </div>
       </div>
-    </a>
+    </div>
   {% endfor %}
 </div>
-  </main>
-
-  <section aria-label="Subscribe example">
-    <div class="container">
-      <article>
-        <hgroup>
-          <h2>Stay Updated</h2>
-          <h3>Join our Poké-newsletter!</h3>
-        </hgroup>
-        <form class="grid">
-          <input type="text" id="firstname" name="firstname" placeholder="First name" aria-label="First name" required="">
-          <input type="email" id="email" name="email" placeholder="Email address" aria-label="Email address" required="">
-          <button type="submit" onclick="event.preventDefault()">Subscribe</button>
-        </form>
-      </article>
-    </div>
-  </section>
-
-  <footer class="container">
-    <small><a href="#">Privacy</a> • <a href="#">Terms</a></small>
-  </footer>
-
-
-</body></html>
+{% endblock %}

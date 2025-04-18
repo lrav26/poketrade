@@ -1,26 +1,28 @@
-.bg-index{
-  background: url("/static/img/background.jpg") no-repeat
-    fixed;
+.bg-index {
+  background: url("/static/img/background.jpg") no-repeat fixed;
   background-size: 100% auto;
 }
+
 .navbar a.nav-link {
   color: #FFFEF6 !important;
 }
+
 .bg-dark {
-  background-color: #2E2E2E !important;
+  background-color: #000000 !important;
 }
+
 .ms-footer {
   background-color: #202020;
 }
 .ms-footer p {
-  color: #7F7F7F;
+  color: #E8E8E8;
   font-size: 13px;
 }
 .ms-footer a:hover {
   color: #6ab43e;
   text-decoration: none;
 }
-.ms-footer-bottom span{
+.ms-footer-bottom span {
   font-size: 13px;
   line-height: 38px;
 }
@@ -29,32 +31,120 @@
   text-decoration: none;
 }
 .ms-footer-bottom a:hover {
-    color: #fff;
+  color: #fff;
 }
 
-/* This is the formatting for the collections page*/
-.card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
-.card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
+main {
+  flex-grow: 1;
+  color: #fff;
 }
+
+/* --- Grid and Card Styles --- */
 
 .grid-5 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  justify-items: center;
 }
 
-.card h3 small {
+.card-container {
+  perspective: 1000px;
+  width: 220px;
+  height: 300px;
+  position: relative;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  transform-origin: center;
+}
+
+.card-container:hover .card-inner {
+  transform: rotateY(180deg) translateY(-10px) scale(1.03);
+}
+
+.card-front, .card-back {
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 15px;
+  padding: 1rem;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  color: black;
+  text-align: center;
+}
+
+.card-front {
+  background: linear-gradient(to bottom right, #f9f6d8, #f5e7a1);
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 0.8rem;
+  backface-visibility: hidden;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.pokemon-img {
+  max-width: 80%;
+  height: 120px;
+  object-fit: contain;
+  margin-top: 10px;
+  border: none;
+  box-shadow: none;
+}
+
+/* Nickname Form Small */
+.nickname-form {
+  margin-top: 1rem;
+}
+
+.nickname-input {
+  width: 100%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Card Front Text Styling */
+.card-front h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #444;
+}
+
+.card-front small {
   font-style: italic;
   color: #666;
+  font-size: 0.8rem;
 }
