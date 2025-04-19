@@ -1,11 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container py-4">
-  <div class="row justify-content-center">
+<div class="container py-4 d-flex align-items-center justify-content-center min-vh-100">
+  <div class="row justify-content-center w-100">
     <div class="col-md-6">
+      <!-- Pokemon Card with Front and Back -->
+      <div class="card-container mx-auto mb-4">
+        <div class="card-inner">
+          <!-- Card Front -->
+          <div class="card-front type-{{ pokemon.type|lower }}">
+            <img src="{{ pokemon.image_url }}" alt="{{ pokemon.name }}" class="pokemon-img">
+            <div class="pokemon-text">
+              <div class="pokemon-name">{{ pokemon.name }}</div>
+              {% if pokemon.nickname %}
+                <div class="pokemon-nickname">"{{ pokemon.nickname }}"</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Card Back -->
+          <div class="card-back">
+            <h5>{{ pokemon.name }}'s Stats</h5>
+            <p>
+              <strong>Type:</strong> {{ pokemon.type }}<br>
+              <strong>HP:</strong> {{ pokemon.hp }}<br>
+              <strong>Attack:</strong> {{ pokemon.attack }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listing Form -->
       <div class="card p-4">
-        <h2 class="card-title text-center mb-3">List {{ pokemon.name }} for Sale</h2>
+        <h2 class="card-title text-center mb-3">List {{ pokemon.name }} for Sale?</h2>
 
         <form method="post">
           {% csrf_token %}
