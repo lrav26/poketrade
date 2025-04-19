@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>My Transaction History</h1>
+    <div class="container">
+        <div class="mb-4 mt-4">
+          <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">My Transaction History</h1>
+        </div>
 
-<ul class="list-group">
-    {% for transaction in transaction_logs %}
-        <li class="list-group-item">
-            <strong>{{ transaction.transaction_type|title }}</strong> - 
-            {{ transaction.pokemon.name }} - 
-            ${{ transaction.price }} - 
-            {{ transaction.timestamp }}
-        </li>
-    {% empty %}
-        <p>No transactions yet.</p>
-    {% endfor %}
-</ul>
+        <ul class="list-group">
+            {% for transaction in transaction_logs %}
+                <li class="list-group-item">
+                    <strong>{{ transaction.transaction_type|title }}</strong> -
+                    {{ transaction.pokemon.name }} -
+                    ${{ transaction.price }} -
+                    {{ transaction.timestamp }}
+                </li>
+            {% empty %}
+                <p>No transactions yet.</p>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock content %}

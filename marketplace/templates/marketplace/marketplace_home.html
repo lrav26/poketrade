@@ -2,49 +2,45 @@
 {% load static %}
 
 {% block content %}
-<div class="mb-4 mt-4">
-  <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">Marketplace</h1>
-</div>
-
-<div class="mb-4">
-  <a href="{% url 'home.index' %}" class="nav-link px-0" style="font-size: 1rem; color: #555d63; text-decoration: underline;">
-    ← Back to Home
-  </a>
-</div>
-
-<!-- Pokémon Grid -->
-<div class="grid-5">
-  {% for listing in listings %}
-    <div class="card-container">
-      <div class="card-inner">
-        <div class="card-front">
-          <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
-          <h5 class="mt-2">
-            {{ listing.pokemon.name }}
-            {% if listing.pokemon.nickname %}
-              <br><small>“{{ listing.pokemon.nickname }}”</small>
-            {% endif %}
-          </h5>
+    <div class="container">
+        <div class="mb-4 mt-4">
+          <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">Marketplace</h1>
         </div>
-        <div class="card-back">
-          <h5>{{ listing.pokemon.name }}'s Stats</h5>
-          <p>
-            <strong>Type:</strong> {{ listing.pokemon.type }}<br>
-            <strong>HP:</strong> {{ listing.pokemon.hp }}<br>
-            <strong>Attack:</strong> {{ listing.pokemon.attack }}<br>
-            <strong>Price:</strong> ${{ listing.price }}
-          </p>
 
-          <a href="{% url 'marketplace_listing_detail' listing.id %}" class="btn btn-sm btn-outline-primary mt-2">
-            View Listing
-          </a>
+        <!-- Pokémon Grid -->
+        <div class="grid-5">
+          {% for listing in listings %}
+            <div class="card-container">
+              <div class="card-inner">
+                <div class="card-front">
+                  <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
+                  <h5 class="mt-2">
+                    {{ listing.pokemon.name }}
+                    {% if listing.pokemon.nickname %}
+                      <br><small>“{{ listing.pokemon.nickname }}”</small>
+                    {% endif %}
+                  </h5>
+                </div>
+                <div class="card-back">
+                  <h5>{{ listing.pokemon.name }}'s Stats</h5>
+                  <p>
+                    <strong>Type:</strong> {{ listing.pokemon.type }}<br>
+                    <strong>HP:</strong> {{ listing.pokemon.hp }}<br>
+                    <strong>Attack:</strong> {{ listing.pokemon.attack }}<br>
+                    <strong>Price:</strong> ${{ listing.price }}
+                  </p>
+
+                  <a href="{% url 'marketplace_listing_detail' listing.id %}" class="btn btn-sm btn-outline-primary mt-2">
+                    View Listing
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <div class="col-12 text-center">
+              <p>No listings available.</p>
+            </div>
+          {% endfor %}
         </div>
-      </div>
     </div>
-  {% empty %}
-    <div class="col-12 text-center">
-      <p>No listings available.</p>
-    </div>
-  {% endfor %}
-</div>
 {% endblock content %}
