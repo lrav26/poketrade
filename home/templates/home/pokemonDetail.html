@@ -15,10 +15,10 @@
   <p><strong>Attack:</strong> {{ pokemon.attack }}</p>
 
   <h3>Give a Nickname:</h3>
-  <form method="post">
+  <form method="post" class="text-center">
     {% csrf_token %}
     {{ form.nickname }}
-    <button type="submit">Save</button>
+    <button type="submit" class="btn btn-primary mt-2">Save</button>
   </form>
 
   <p><a href="{% url 'collection' %}">← Back to Collection</a></p>
