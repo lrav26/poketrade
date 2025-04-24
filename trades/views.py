@@ -6,8 +6,31 @@ from home.models import Pokemon
 from django.contrib.auth.models import User
 
 @login_required
+def initiate_trade(request, pokemon_id):
+    pokemon = get_object_or_404(Pokemon, id=pokemon_id)
+    trade_with_id = request.POST.get('trade_with')
+    
+    if not trade_with_id:
+        messages.error(request, "Please select a user to trade with.")
+        return redirect('collection')
+        
+    trade_with_user = get_object_or_404(User, id=trade_with_id)
+    
+    if trade_with_user == request.user:
+        messages.error(request, "You cannot trade with yourself!")
+        return redirect('trade_home')
+    
+    return redirect('create_trade', user_id=trade_with_user.id)
+
+@login_required
 def create_trade(request, user_id):
     receiver = get_object_or_404(User, id=user_id)
+    
+    # Check if trying to trade with self
+    if receiver == request.user:
+        messages.error(request, "You cannot trade with yourself!")
+        return redirect('trade_home')
+        
     if request.method == 'POST':
         sender_pokemon_ids = request.POST.getlist('sender_pokemon')
         receiver_pokemon_ids = request.POST.getlist('receiver_pokemon')
@@ -25,7 +48,6 @@ def create_trade(request, user_id):
         messages.success(request, 'Trade offer sent successfully!')
         return redirect('trade_home')
 
-    # Changed from 'owner' to 'user'
     sender_pokemon = Pokemon.objects.filter(user=request.user)
     receiver_pokemon = Pokemon.objects.filter(user=receiver)
     

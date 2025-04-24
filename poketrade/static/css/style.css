@@ -470,3 +470,26 @@ main {
 .form-select {
     border-radius: 0.5rem;
 }
+
+/* Style for form labels and text in create_trade.html */
+.container .form-check-label {
+    color: black;
+}
+
+.container h2, .container h3 {
+    color: black;
+}
+
+/* Make container paragraphs black except in footer */
+.container p:not(.ms-footer p) {
+    color: black;
+}
+
+/* Ensure footer text stays white */
+.ms-footer p {
+    color: #E8E8E8;
+}
+
+.ms-footer-bottom span {
+    color: white;
+}
