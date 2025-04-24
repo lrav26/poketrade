@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'accounts',
     'home',
     'marketplace',
+    'trades',
 ]
 
 MIDDLEWARE = [

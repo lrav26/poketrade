@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Trade Center</h2>
+    
+    <h3 class="mt-4">Received Trade Offers</h3>
+    <div class="row">
+        {% for trade in received_trades %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Trade from {{ trade.sender.username }}</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>They offer:</h6>
+                                <ul>
+                                    {% for pokemon in trade.sender_pokemon.all %}
+                                        <li>{{ pokemon.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>For your:</h6>
+                                <ul>
+                                    {% for pokemon in trade.receiver_pokemon.all %}
+                                        <li>{{ pokemon.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% if trade.status == 'PENDING' %}
+                            <form method="post" action="{% url 'respond_to_trade' trade.id %}">
+                                {% csrf_token %}
+                                <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+                                <button type="submit" name="action" value="decline" class="btn btn-danger">Decline</button>
+                            </form>
+                        {% else %}
+                            <p class="mb-0">Status: {{ trade.status }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col">
+                <p>No trade offers received.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="mt-4">Sent Trade Offers</h3>
+    <div class="row">
+        {% for trade in sent_trades %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Trade to {{ trade.receiver.username }}</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>You offer:</h6>
+                                <ul>
+                                    {% for pokemon in trade.sender_pokemon.all %}
+                                        <li>{{ pokemon.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>For their:</h6>
+                                <ul>
+                                    {% for pokemon in trade.receiver_pokemon.all %}
+                                        <li>{{ pokemon.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% if trade.status == 'PENDING' %}
+                            <form method="post" action="{% url 'cancel_trade' trade.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">Cancel Trade</button>
+                            </form>
+                        {% else %}
+                            <p class="mb-0">Status: {{ trade.status }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col">
+                <p>No trade offers sent.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

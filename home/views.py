@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .utils import fetch_random_pokemon
 import requests
 from marketplace.models import TransactionHistory
+from django.contrib.auth.models import User  # Add this import
 
 
 def index(request):
@@ -19,30 +20,15 @@ def about(request):
     return render(request, 'home/about.html',
                   {'template_data': template_data})
 
+
 @login_required
 def collection(request):
-    if request.method == "POST" and request.user.is_superuser:
-        pokemon_id = request.POST.get("pokemon_id")
-        if pokemon_id:
-            try:
-                res = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}")
-                if res.status_code == 200:
-                    data = res.json()
-                    Pokemon.objects.create(
-                        user=request.user,
-                        name=data["name"].capitalize(),
-                        type=data["types"][0]["type"]["name"].capitalize(),
-                        hp=data["stats"][0]["base_stat"],
-                        attack=data["stats"][1]["base_stat"],
-                        image_url=data["sprites"]["other"]["official-artwork"]["front_default"]
-                    )
-            except Exception as e:
-                print("Error adding Pokémon:", e)
-        return redirect("collection")
-
-    pokemons = Pokemon.objects.filter(user=request.user)
-    #pokemons = request.user.pokemons.all()
-    return render(request, "home/collection.html", {"pokemons": pokemons})
+    pokemons = Pokemon.objects.filter(user=request.user)  # Changed from 'owner' to 'user'
+    users = User.objects.exclude(id=request.user.id)
+    return render(request, 'home/collection.html', {
+        'pokemons': pokemons,
+        'users': users,
+    })
 
 @login_required
 def pokemon_detail(request, id):

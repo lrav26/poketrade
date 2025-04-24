@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Create Trade with {{ receiver.username }}</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Your Pokémon</h3>
+                <div class="form-group">
+                    {% for pokemon in sender_pokemon %}
+                        <div class="form-check">
+                            <input type="checkbox" name="sender_pokemon" value="{{ pokemon.id }}" class="form-check-input" id="sender_pokemon_{{ pokemon.id }}">
+                            <label class="form-check-label" for="sender_pokemon_{{ pokemon.id }}">
+                                {{ pokemon.name }}
+                            </label>
+                        </div>
+                    {% empty %}
+                        <p>You don't have any Pokémon to trade.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <h3>{{ receiver.username }}'s Pokémon</h3>
+                <div class="form-group">
+                    {% for pokemon in receiver_pokemon %}
+                        <div class="form-check">
+                            <input type="checkbox" name="receiver_pokemon" value="{{ pokemon.id }}" class="form-check-input" id="receiver_pokemon_{{ pokemon.id }}">
+                            <label class="form-check-label" for="receiver_pokemon_{{ pokemon.id }}">
+                                {{ pokemon.name }}
+                            </label>
+                        </div>
+                    {% empty %}
+                        <p>This user doesn't have any Pokémon available for trade.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Send Trade Offer</button>
+            <a href="{% url 'trade_home' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
