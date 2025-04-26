@@ -12,27 +12,40 @@
           {% for listing in listings %}
             <div class="card-container">
               <div class="card-inner">
-                <div class="card-front">
-                  <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
-                  <h5 class="mt-2">
-                    {{ listing.pokemon.name }}
-                    {% if listing.pokemon.nickname %}
-                      <br><small>“{{ listing.pokemon.nickname }}”</small>
-                    {% endif %}
-                  </h5>
-                </div>
-                <div class="card-back">
-                  <h5>{{ listing.pokemon.name }}'s Stats</h5>
-                  <p>
-                    <strong>Type:</strong> {{ listing.pokemon.type }}<br>
-                    <strong>HP:</strong> {{ listing.pokemon.hp }}<br>
-                    <strong>Attack:</strong> {{ listing.pokemon.attack }}<br>
-                    <strong>Price:</strong> ${{ listing.price }}
-                  </p>
+                <div class="card-front type-{{ listing.pokemon.type|lower }}">
+                  <div class="pokemon-name">{{ listing.pokemon.name }}</div>
 
-                  <a href="{% url 'marketplace_listing_detail' listing.id %}" class="btn btn-sm btn-outline-primary mt-2">
-                    View Listing
-                  </a>
+                  <div class="pokemon-price">
+                    ${{ listing.price }}
+                  </div>
+
+                  <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
+
+                  <div class="pokemon-stats-front">
+                    <p><strong>Type:</strong> {{ listing.pokemon.type }}</p>
+                    <p><strong>HP:</strong> {{ listing.pokemon.hp }}</p>
+                    <p><strong>Attack:</strong> {{ listing.pokemon.attack }}</p>
+                    <p><strong>Defense:</strong> {{ listing.pokemon.defense }}</p>
+                    <p><strong>Sp. Atk:</strong> {{ listing.pokemon.sp_attack }}</p>
+                    <p><strong>Sp. Def:</strong> {{ listing.pokemon.sp_defense }}</p>
+                    <p><strong>Speed:</strong> {{ listing.pokemon.speed }}</p>
+                  </div>
+                </div>
+                <div class="card-back type-{{ listing.pokemon.type|lower }}">
+                  <!-- Pokéball Icon -->
+                  <img src="{% static 'img/pokeball.png' %}" alt="Pokéball" class="pokeball-icon">
+
+                  <!-- Big Price -->
+                  <h2 class="marketplace-price">
+                    ${{ listing.price }}
+                  </h2>
+
+                  <!-- View Listing Button -->
+                  <div class="mt-4 d-flex justify-content-center">
+                    <a href="{% url 'marketplace_listing_detail' listing.id %}" class="btn btn-outline-primary btn-lg" style="font-weight: bold; border: 2px solid gold;">
+                      View Listing
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

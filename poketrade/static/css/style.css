@@ -50,8 +50,6 @@ main {
   color: #fff;
 }
 
-/* --- Grid and Card Styles --- */
-
 /* --- Collection Grid --- */
 .grid-5 {
   display: grid;
@@ -61,7 +59,7 @@ main {
   margin-top: 2rem;
 }
 
-/* --- Card Container: Handles Perspective and Hover --- */
+/* --- Card Layout --- */
 .card-container {
   perspective: 1200px;
   width: 220px;
@@ -69,7 +67,6 @@ main {
   cursor: pointer;
 }
 
-/* --- Card Inner: Handles Flipping --- */
 .card-inner {
   position: relative;
   width: 100%;
@@ -77,14 +74,10 @@ main {
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
   transform-origin: center;
-  transform: rotateY(0deg) translateY(0px);
 }
 
 .card-container:hover .card-inner {
   transform: rotateY(180deg) translateY(-5px);
-}
-.card-container:hover .shimmer-layer {
-  animation: goldShimmer 1.5s infinite;
 }
 
 /* --- Card Faces --- */
@@ -100,18 +93,16 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* --- Card Front Face --- */
 .card-front {
   background: none;
   border: 5px solid gold;
   padding: 0px;
   z-index: 1;
-  transition: all 0.3s ease;
 }
 
-/* --- Card Back Face --- */
 .card-back {
   background: lightgrey;
   padding: 1rem;
@@ -119,64 +110,131 @@ main {
   border: 5px solid gold;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   overflow-y: auto;
-
-  flex-shrink: 0;
-  transform-style: preserve-3d;
-}
-/* --- Type Colored Inner Layer (Inside Front) --- */
-.type-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  padding: 1rem;
-  background-color: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
-/* --- Pokemon Image --- */
-.pokemon-img {
-  width: 80%;
-  height: 130px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.pokemon-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 0.5rem;
-}
-
+/* --- Name and Nickname --- */
 .pokemon-name {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 0.2rem;
-  text-align: center;
   color: black;
-  transition: text-shadow 0.3s ease;
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  text-align: left;
+  text-shadow: 0 0 6px white;
 }
 
 .pokemon-nickname {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-style: italic;
   color: black;
-  text-align: center;
-  transition: text-shadow 0.3s ease;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  text-align: right;
+  text-shadow: 0 0 6px white;
 }
 
-.pokemon-name, .pokemon-nickname {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+/* --- Image --- */
+.pokemon-img {
+  width: 80%;
+  height: 150px;
+  object-fit: contain;
+  margin: 2rem auto 0 auto;
+  padding: 5px;
+  border: 2px solid gold;
+  border-radius: 8px;
+  background-color: white;
+}
+
+/* --- Stats on Front --- */
+.pokemon-stats-front {
+  font-size: 0.7rem; /* slightly bigger */
+  line-height: 1.1;
+  color: black;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0.4rem;
+  row-gap: 0.2rem;
+  width: 92%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0.4rem 0.5rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.pokemon-stats-front p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: 0.75rem; /* make each stat slightly bigger than box default */
+}
+
+/* --- Back Card Content --- */
+.card-back h5 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  text-align: center;
+}
+
+.card-back p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.25rem 0;
+  text-align: center;
+}
+
+.nickname-form {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.nickname-input {
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1rem;
+  border: 2px solid gold;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #fdfdfd;
+}
+
+/* --- Pokéball Icon on Card Back --- */
+.pokeball-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 40px;
+  height: 40px;
+  opacity: 0.9;
+}
+
+/* --- Freshened Buttons on Back --- */
+.card-back .btn-success {
+  background-color: #4CAF50;
+  border: 2px solid gold;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+}
+
+.card-back .btn-primary {
+  background-color: #007bff;
+  border: 2px solid gold;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+}
+
+.card-back .btn-success:hover,
+.card-back .btn-primary:hover {
+  background-color: gold;
+  color: black;
+  font-weight: bold;
 }
 
 /* --- Text Styling on Front --- */
@@ -443,4 +501,28 @@ main {
     color: white;
     font-size: 3.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.pokemon-price {
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-shadow: 0px 0px 4px white;
+}
+
+.marketplace-price {
+  margin-top: 3rem;
+  font-size: 2rem;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  text-shadow: 0px 0px 4px white;
 }
