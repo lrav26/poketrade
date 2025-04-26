@@ -59,3 +59,6 @@ def nickname_update(request, pk):
 def logs(request):
     transaction_logs = TransactionHistory.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'home/logs.html', {'transaction_logs': transaction_logs})
+
+def coins_balance(request):
+    return JsonResponse({'coins': float(request.user.profile.poke_coins)})

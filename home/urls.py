@@ -7,4 +7,5 @@ urlpatterns = [
     path('pokemon/<int:id>/', views.pokemon_detail, name='pokemonDetail'),
     path('nickname_update/<int:pk>/', views.nickname_update, name='nickname_update'),
     path('logs/', views.logs, name='logs'),
+    path('coins_balance/', views.coins_balance, name='coins_balance'),
 ]

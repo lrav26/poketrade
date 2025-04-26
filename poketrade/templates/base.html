@@ -33,9 +33,13 @@
           <div class="ms-auto d-flex navbar-nav align-items-center gap-3">
             {% if user.is_authenticated %}
                 <a class="nav-link" href="{% url 'marketplace_home' %}">Marketplace</a>
+                <a class="nav-link" href="{% url 'trade_center_home' %}">Trading Center</a>
                 <a class="nav-link" href="{% url 'collection' %}">Collection</a>
                 <a class="nav-link" href="{% url 'logs' %}">Logs</a>
-                <a class="nav-link" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
+                <a class="nav-link" href="{% url 'accounts.logout' %}">
+                  Logout ({{ user.username }})
+                  <span id="pokeCoinsAmount">- {{ user.profile.poke_coins|floatformat:2 }} PokeCoins</span>
+                </a>
             {% else %}
                 <a class="nav-link" href="{% url 'home.about' %}">About</a>
                 <a class="nav-link" href="{% url 'accounts.login' %}">Login</a>
@@ -48,7 +52,6 @@
     <!-- Header -->
 
     <main>
-
       <!-- 🛎️ Flash Messages Section -->
       {% if messages %}
         {% for message in messages %}
@@ -66,37 +69,53 @@
 
     <!-- Footer -->
     <section class="p-3 ms-footer d-none d-md-block">
-        <div class="container">
-            <div class="row mt-3 text-white">
-                <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mb-4">
-                    <b>LINKS</b>
-                    <hr />
-                    <p>Link 1</p>
-                    <p>Link 2</p>
-                </div>
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
-                    <b>CREATED BY</b>
-                    <hr />
-                    <p><i class="fas fa-user me-2"></i> Zoha Alam</p>
-                    <p><i class="fas fa-user me-2"></i> Grayden Bartlett</p>
-                    <p><i class="fas fa-user me-2"></i> Camilo Castrillon Davis</p>
-                    <p><i class="fas fa-user me-2"></i> Valeria Itsko</p>
-                    <p><i class="fas fa-user me-2"></i> Leela Ravoori</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row mt-3 text-white">
+          <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mb-4">
+            <b>USEFUL LINKS</b>
+            <hr />
+            <p><a href="{% url 'home.index' %}" class="text-white text-decoration-none">Home</a></p>
+            <p><a href="{% url 'marketplace_home' %}" class="text-white text-decoration-none">Marketplace</a></p>
+            <p><a href="{% url 'trade_center_home' %}" class="text-white text-decoration-none">Trading Center</a></p>
+            <p><a href="{% url 'collection' %}" class="text-white text-decoration-none">My Collection</a></p>
+            <p><a href="{% url 'logs' %}" class="text-white text-decoration-none">Activity Logs</a></p>
+          </div>
+
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <b>CREATED BY</b>
+            <hr />
+            <p><i class="fas fa-user me-2"></i> Zoha Alam</p>
+            <p><i class="fas fa-user me-2"></i> Grayden Bartlett</p>
+            <p><i class="fas fa-user me-2"></i> Camilo Castrillon Davis</p>
+            <p><i class="fas fa-user me-2"></i> Valeria Itsko</p>
+            <p><i class="fas fa-user me-2"></i> Leela Ravoori</p>
+          </div>
         </div>
+      </div>
     </section>
+
     <section class="p-3 ms-footer-bottom bg-dark">
-        <div class="container d-flex justify-content-between">
-            <div class="text-white">
-                <span>2340 Group 1</span>
-            </div>
-            <div class="text-white">
-                <span>Copyright - 2025</span>
-            </div>
+      <div class="container d-flex justify-content-between">
+        <div class="text-white">
+          <span>2340 Group 1</span>
         </div>
+        <div class="text-white">
+          <span>Copyright - 2025</span>
+        </div>
+      </div>
     </section>
     <!-- Footer -->
-
+    <script>
+    function updateCoins() {
+        fetch("{% url 'coins_balance' %}")
+        .then(response => response.json())
+        .then(data => {
+            const coinsSpan = document.getElementById('pokeCoinsAmount');
+            if (coinsSpan) {
+                coinsSpan.textContent = data.coins.toFixed(2) + ' PokeCoins';
+            }
+        });
+    }
+    </script>
   </body>
 </html>

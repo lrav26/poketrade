@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Offer a Trade for {{ listing.pokemon.name }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="offered_pokemon" class="form-label">Select your Pokémon to offer:</label>
+            <select name="offered_pokemon" id="offered_pokemon" class="form-select">
+                {% for pokemon in user_pokemon %}
+                    <option value="{{ pokemon.id }}">{{ pokemon.name }} (HP: {{ pokemon.hp }}, Attack: {{ pokemon.attack }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit Offer</button>
+        <a href="{% url 'trade_center_home' %}" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+{% endblock %}

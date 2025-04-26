@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Respond to Offer</h2>
+
+    <p><strong>Offered Pokémon:</strong> {{ offer.offered_pokemon.name }}</p>
+    <p><strong>From User:</strong> {{ offer.sender.username }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="action" value="accept" class="btn btn-success">Accept Offer</button>
+        <button type="submit" name="action" value="decline" class="btn btn-danger ms-2">Decline Offer</button>
+        <a href="{% url 'my_listings_offers' %}" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+{% endblock %}

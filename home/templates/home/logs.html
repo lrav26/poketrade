@@ -1,22 +1,98 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="mb-4 mt-4">
-          <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">My Transaction History</h1>
+<div class="container">
+    <div class="mb-4 mt-4">
+        <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">My Transaction History</h1>
+    </div>
+
+    {% if transaction_logs %}
+        <!-- Marketplace Transactions -->
+        <div class="mb-5">
+            <h4 class="text-dark" style="border-bottom: 2px solid #3d3d47;">🛒 Marketplace Transactions</h4>
+            <div class="table-responsive mt-4">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Pokémon</th>
+                            <th scope="col">Action</th>
+                            <th scope="col">Partner</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transaction_logs %}
+                            {% if transaction.transaction_type == 'buy' or transaction.transaction_type == 'sell' %}
+                                <tr>
+                                    <td>{{ transaction.pokemon.name }}</td>
+                                    <td>
+                                        {% if transaction.transaction_type == 'buy' %}
+                                            🛒 Bought
+                                        {% else %}
+                                            💵 Sold
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if transaction.other_party %}
+                                            {{ transaction.other_party.username }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        ${{ transaction.price }}
+                                    </td>
+                                    <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <ul class="list-group">
-            {% for transaction in transaction_logs %}
-                <li class="list-group-item">
-                    <strong>{{ transaction.transaction_type|title }}</strong> -
-                    {{ transaction.pokemon.name }} -
-                    ${{ transaction.price }} -
-                    {{ transaction.timestamp }}
-                </li>
-            {% empty %}
-                <p>No transactions yet.</p>
-            {% endfor %}
-        </ul>
-    </div>
+        <!-- Trades -->
+        <div class="mb-5">
+            <h4 class="text-dark" style="border-bottom: 2px solid #3d3d47;">🔄 Trades</h4>
+            <div class="table-responsive mt-4">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Pokémon</th>
+                            <th scope="col">Action</th>
+                            <th scope="col">Partner</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transaction_logs %}
+                            {% if transaction.transaction_type == 'trade' %}
+                                <tr>
+                                    <td>{{ transaction.pokemon.name }}</td>
+                                    <td>🔄 Traded</td>
+                                    <td>
+                                        {% if transaction.other_party %}
+                                            {{ transaction.other_party.username }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>-</td>
+                                    <td>{{ transaction.timestamp|date:"Y-m-d H:i" }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="text-center">
+            <p class="text-muted">No transactions yet.</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock content %}

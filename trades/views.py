@@ -1,109 +1,121 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import TradeOffer
+from .models import TradeListing, ListingOffer
 from home.models import Pokemon
 from django.contrib.auth.models import User
+from marketplace.models import TransactionHistory
+
 
 @login_required
-def initiate_trade(request, pokemon_id):
-    pokemon = get_object_or_404(Pokemon, id=pokemon_id)
-    trade_with_id = request.POST.get('trade_with')
-    
-    if not trade_with_id:
-        messages.error(request, "Please select a user to trade with.")
+def trade_center_home(request):
+    trade_listings = TradeListing.objects.all()
+    return render(request, 'trades/trade_center_home.html', {'trade_listings': trade_listings})
+
+@login_required
+def list_pokemon_for_trade(request, pokemon_id):
+    pokemon = get_object_or_404(Pokemon, id=pokemon_id, user=request.user)
+
+    # Check if already listed
+    if TradeListing.objects.filter(pokemon=pokemon).exists():
+        messages.error(request, "This Pokémon is already listed for trade.")
         return redirect('collection')
-        
-    trade_with_user = get_object_or_404(User, id=trade_with_id)
-    
-    if trade_with_user == request.user:
-        messages.error(request, "You cannot trade with yourself!")
-        return redirect('trade_home')
-    
-    return redirect('create_trade', user_id=trade_with_user.id)
+
+    TradeListing.objects.create(user=request.user, pokemon=pokemon)
+    messages.success(request, f"{pokemon.name} has been listed for trade!")
+    return redirect('trade_center_home')
 
 @login_required
-def create_trade(request, user_id):
-    receiver = get_object_or_404(User, id=user_id)
-    
-    # Check if trying to trade with self
-    if receiver == request.user:
-        messages.error(request, "You cannot trade with yourself!")
-        return redirect('trade_home')
-        
+def make_trade_offer(request, listing_id):
+    listing = get_object_or_404(TradeListing, id=listing_id)
+
+    if listing.user == request.user:
+        messages.error(request, "You cannot offer on your own listing.")
+        return redirect('trade_center_home')
+
     if request.method == 'POST':
-        sender_pokemon_ids = request.POST.getlist('sender_pokemon')
-        receiver_pokemon_ids = request.POST.getlist('receiver_pokemon')
-        
-        if not sender_pokemon_ids or not receiver_pokemon_ids:
-            messages.error(request, 'Please select at least one Pokémon from each side.')
-            return redirect('create_trade', user_id=user_id)
+        offered_pokemon_id = request.POST.get('offered_pokemon')
+        if not offered_pokemon_id:
+            messages.error(request, 'Please select one of your Pokémon to offer.')
+            return redirect('make_trade_offer', listing_id=listing.id)
 
-        trade = TradeOffer.objects.create(
+        offered_pokemon = get_object_or_404(Pokemon, id=offered_pokemon_id, user=request.user)
+
+        ListingOffer.objects.create(
+            listing=listing,
             sender=request.user,
-            receiver=receiver
+            offered_pokemon=offered_pokemon
         )
-        trade.sender_pokemon.set(Pokemon.objects.filter(id__in=sender_pokemon_ids))
-        trade.receiver_pokemon.set(Pokemon.objects.filter(id__in=receiver_pokemon_ids))
-        messages.success(request, 'Trade offer sent successfully!')
-        return redirect('trade_home')
+        messages.success(request, "Offer submitted successfully!")
+        return redirect('trade_center_home')
 
-    sender_pokemon = Pokemon.objects.filter(user=request.user)
-    receiver_pokemon = Pokemon.objects.filter(user=receiver)
-    
-    return render(request, 'trades/create_trade.html', {
-        'receiver': receiver,
-        'sender_pokemon': sender_pokemon,
-        'receiver_pokemon': receiver_pokemon
+    user_pokemon = Pokemon.objects.filter(user=request.user)
+    return render(request, 'trades/make_trade_offer.html', {
+        'listing': listing,
+        'user_pokemon': user_pokemon
     })
 
+@login_required
+def my_listings_offers(request):
+    listings = TradeListing.objects.filter(user=request.user)
+    return render(request, 'trades/my_listings_offers.html', {'listings': listings})
 
 @login_required
-def trade_home(request):
-    # Get trades where the current user is the receiver
-    received_trades = TradeOffer.objects.filter(receiver=request.user)
+def respond_to_listing_offer(request, offer_id):
+    offer = get_object_or_404(ListingOffer, id=offer_id)
 
-    # Get trades where the current user is the sender
-    sent_trades = TradeOffer.objects.filter(sender=request.user)
-
-    return render(request, 'trades/trade_home.html', {
-        'received_trades': received_trades,
-        'sent_trades': sent_trades
-    })
-
-
-@login_required
-def respond_to_trade(request, trade_id):
-    trade = get_object_or_404(TradeOffer, id=trade_id, receiver=request.user)
+    if offer.listing.user != request.user:
+        messages.error(request, "You can only respond to offers on your own listings.")
+        return redirect('my_listings_offers')
 
     if request.method == 'POST':
         action = request.POST.get('action')
-
         if action == 'accept':
-            trade.status = 'ACCEPTED'
-            # Handle the pokemon exchange
-            for pokemon in trade.sender_pokemon.all():
-                pokemon.user = trade.receiver
-                pokemon.save()
-            for pokemon in trade.receiver_pokemon.all():
-                pokemon.user = trade.sender
-                pokemon.save()
+            offer.status = 'ACCEPTED'
+            offer.save()
+
+            # Swap ownership
+            offered_pokemon = offer.offered_pokemon
+            target_pokemon = offer.listing.pokemon
+
+            original_owner = target_pokemon.user
+            offer_sender = offered_pokemon.user
+
+            # Swap the owners
+            offered_pokemon.user, target_pokemon.user = target_pokemon.user, offered_pokemon.user
+            offered_pokemon.save()
+            target_pokemon.save()
+
+            # Create TransactionHistory logs
+            TransactionHistory.objects.create(
+                user=offer_sender,
+                pokemon=target_pokemon,
+                price=0,
+                transaction_type='trade',
+                other_party=original_owner
+            )
+
+            TransactionHistory.objects.create(
+                user=original_owner,
+                pokemon=offered_pokemon,
+                price=0,
+                transaction_type='trade',
+                other_party=offer_sender
+            )
+
+            # ❗ First decline other offers BEFORE deleting listing
+            ListingOffer.objects.filter(listing=offer.listing).exclude(id=offer.id).update(status='DECLINED')
+
+            # Now delete the listing
+            offer.listing.delete()
+
+            messages.success(request, "Offer accepted! Pokémon have been swapped and logged.")
+            return redirect('my_listings_offers')
+
         elif action == 'decline':
-            trade.status = 'DECLINED'
+            offer.status = 'DECLINED'
+            offer.save()
+            messages.success(request, "Offer declined.")
+            return redirect('my_listings_offers')
 
-        trade.save()
-        messages.success(request, f'Trade {trade.status.lower()}!')
-
-    return redirect('trade_home')
-
-
-@login_required
-def cancel_trade(request, trade_id):
-    trade = get_object_or_404(TradeOffer, id=trade_id, sender=request.user, status='PENDING')
-
-    if request.method == 'POST':
-        trade.status = 'CANCELLED'
-        trade.save()
-        messages.success(request, 'Trade cancelled successfully!')
-
-    return redirect('trade_home')
+    return render(request, 'trades/respond_offer.html', {'offer': offer})

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Offers on My Listings</h2>
+
+    {% for listing in listings %}
+        <div class="card mb-4">
+            <div class="card-header">
+                Offers for {{ listing.pokemon.name }}
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for offer in listing.offers.all %}
+                    <li class="list-group-item">
+                        Offered: {{ offer.offered_pokemon.name }} by {{ offer.sender.username }} (Status: {{ offer.status }})
+                        {% if offer.status == 'PENDING' %}
+                            <a href="{% url 'respond_to_listing_offer' offer.id %}" class="btn btn-success btn-sm ms-2">Respond</a>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted">No offers yet for this listing.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <div class="text-center">
+            <p class="text-muted">You have no active listings yet.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

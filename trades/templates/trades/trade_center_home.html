@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Trading Center</h2>
+        <a href="{% url 'my_listings_offers' %}" class="btn btn-secondary">My Trade Offers</a>
+    </div>
+
+    <div class="grid-5 mt-4">
+        {% for listing in trade_listings %}
+            <div class="card-container">
+                <div class="card-inner">
+
+                    <!-- Card Front -->
+                    <div class="card-front type-{{ listing.pokemon.type|lower }}">
+                        <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
+                        <div class="pokemon-text">
+                            <div class="pokemon-name">{{ listing.pokemon.name }}</div>
+                            {% if listing.pokemon.nickname %}
+                                <div class="pokemon-nickname">"{{ listing.pokemon.nickname }}"</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Card Back -->
+                    <div class="card-back">
+                        <h5>{{ listing.pokemon.name }}'s Stats</h5>
+                        <p>
+                            <strong>Type:</strong> {{ listing.pokemon.type }}<br>
+                            <strong>HP:</strong> {{ listing.pokemon.hp }}<br>
+                            <strong>Attack:</strong> {{ listing.pokemon.attack }}
+                        </p>
+
+                        <!-- Action Buttons -->
+                        <div class="mt-2 d-flex flex-column gap-2">
+                            {% if listing.user != user %}
+                                <a href="{% url 'make_trade_offer' listing.id %}" class="btn btn-outline-primary btn-sm">Offer Trade</a>
+                            {% else %}
+                                <span class="badge bg-secondary w-100">Your Listing</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p>No Pokémon listed for trade yet!</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

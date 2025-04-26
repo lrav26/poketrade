@@ -15,6 +15,15 @@ def marketplace_home(request):
 @login_required
 def marketplace_listing_detail(request, listing_id):
     listing = get_object_or_404(MarketplaceListing, id=listing_id, is_active=True)
+
+    if request.method == 'POST':
+        # (Purchase logic happens here, deduct coins, etc.)
+
+        return render(request, 'marketplace/listing_detail.html', {
+            'listing': listing,
+            'purchased': True
+        })
+
     return render(request, 'marketplace/listing_detail.html', {'listing': listing})
 
 
@@ -23,23 +32,38 @@ def buy_pokemon(request, listing_id):
     listing = get_object_or_404(MarketplaceListing, id=listing_id, is_active=True)
 
     if request.method == 'POST':
+        # Check if user has enough PokeCoins
+        if request.user.profile.poke_coins < listing.price:
+            messages.error(request, "You do not have enough PokeCoins!")
+            return redirect('marketplace_home')
+
+        # Deduct PokeCoins from buyer
+        request.user.profile.poke_coins -= listing.price
+        request.user.profile.save()
+
+        # Optional: Give coins to the seller
+        listing.seller.profile.poke_coins += listing.price
+        listing.seller.profile.save()
+
         # Transfer ownership
         pokemon = listing.pokemon
         pokemon.user = request.user
         pokemon.save()
-        messages.success(request, f"Congratulations! You successfully bought {pokemon.name}!")
 
         # Mark the listing as inactive
         listing.is_active = False
         listing.save()
 
-        # Create a TransactionHistory object if you are tracking purchases
+        # Record transaction
         TransactionHistory.objects.create(
             user=request.user,
             pokemon=pokemon,
             price=listing.price,
-            transaction_type="buy"
+            transaction_type="buy",
+            other_party=listing.seller
         )
+
+        messages.success(request, f"Congratulations! You successfully bought {pokemon.name}!")
 
         return redirect('marketplace_home')
 
