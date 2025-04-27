@@ -32,7 +32,6 @@ def buy_pokemon(request, listing_id):
     listing = get_object_or_404(MarketplaceListing, id=listing_id, is_active=True)
 
     if request.method == 'POST':
-        # Check if user has enough PokeCoins
         if request.user.profile.poke_coins < listing.price:
             messages.error(request, "You do not have enough PokeCoins!")
             return redirect('marketplace_home')
@@ -41,7 +40,7 @@ def buy_pokemon(request, listing_id):
         request.user.profile.poke_coins -= listing.price
         request.user.profile.save()
 
-        # Optional: Give coins to the seller
+        # Give PokeCoins to seller
         listing.seller.profile.poke_coins += listing.price
         listing.seller.profile.save()
 
@@ -50,11 +49,11 @@ def buy_pokemon(request, listing_id):
         pokemon.user = request.user
         pokemon.save()
 
-        # Mark the listing as inactive
+        # Mark listing inactive
         listing.is_active = False
         listing.save()
 
-        # Record transaction
+        # Record buyer transaction
         TransactionHistory.objects.create(
             user=request.user,
             pokemon=pokemon,
@@ -63,11 +62,21 @@ def buy_pokemon(request, listing_id):
             other_party=listing.seller
         )
 
+        # ✅ Record seller transaction
+        TransactionHistory.objects.create(
+            user=listing.seller,
+            pokemon=pokemon,
+            price=listing.price,
+            transaction_type="sell",
+            other_party=request.user
+        )
+
         messages.success(request, f"Congratulations! You successfully bought {pokemon.name}!")
 
         return redirect('marketplace_home')
 
     return redirect('marketplace_home')
+
 
 @login_required
 def create_listing(request, pokemon_id):
