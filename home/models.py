@@ -9,7 +9,6 @@ from accounts.models import Profile
 @receiver(post_save, sender=User)
 def give_new_user_starter_pack(sender, instance, created, **kwargs):
     if created:
-        # Only create profile if it doesn't exist
         Profile.objects.get_or_create(user=instance, defaults={'poke_coins': 100.00})
 
         pokemons = fetch_six_random_pokemon()
