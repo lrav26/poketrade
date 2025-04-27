@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 
-
 @login_required
 def marketplace_home(request):
     listings = MarketplaceListing.objects.filter(is_active=True)
@@ -17,7 +16,6 @@ def marketplace_listing_detail(request, listing_id):
     listing = get_object_or_404(MarketplaceListing, id=listing_id, is_active=True)
 
     if request.method == 'POST':
-        # (Purchase logic happens here, deduct coins, etc.)
 
         return render(request, 'marketplace/listing_detail.html', {
             'listing': listing,
@@ -36,24 +34,24 @@ def buy_pokemon(request, listing_id):
             messages.error(request, "You do not have enough PokeCoins!")
             return redirect('marketplace_home')
 
-        # Deduct PokeCoins from buyer
+
         request.user.profile.poke_coins -= listing.price
         request.user.profile.save()
 
-        # Give PokeCoins to seller
+
         listing.seller.profile.poke_coins += listing.price
         listing.seller.profile.save()
 
-        # Transfer ownership
+
         pokemon = listing.pokemon
         pokemon.user = request.user
         pokemon.save()
 
-        # Mark listing inactive
+
         listing.is_active = False
         listing.save()
 
-        # Record buyer transaction
+
         TransactionHistory.objects.create(
             user=request.user,
             pokemon=pokemon,
@@ -62,7 +60,6 @@ def buy_pokemon(request, listing_id):
             other_party=listing.seller
         )
 
-        # ✅ Record seller transaction
         TransactionHistory.objects.create(
             user=listing.seller,
             pokemon=pokemon,
