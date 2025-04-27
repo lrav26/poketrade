@@ -6,4 +6,6 @@ urlpatterns = [
     path('listing/<int:listing_id>/', views.marketplace_listing_detail, name='marketplace_listing_detail'),
     path('listing/<int:listing_id>/buy/', views.buy_pokemon, name='buy_pokemon'),
     path('create_listing/<int:pokemon_id>/', views.create_listing, name='create_listing'),
+    path('cancel_listing/<int:listing_id>/', views.cancel_listing, name='cancel_listing'),
+
 ]

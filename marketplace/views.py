@@ -91,3 +91,20 @@ def create_listing(request, pokemon_id):
             return redirect('marketplace_home')
 
     return render(request, 'marketplace/create_listing.html', {'pokemon': pokemon})
+
+@login_required
+def cancel_listing(request, listing_id):
+    listing = get_object_or_404(MarketplaceListing, id=listing_id, is_active=True)
+
+    # Only allow the seller to cancel
+    if listing.seller != request.user:
+        messages.error(request, "You are not authorized to cancel this listing.")
+        return redirect('marketplace_home')
+
+    if request.method == 'POST':
+        listing.is_active = False
+        listing.save()
+        messages.success(request, "Your listing was successfully cancelled!")
+        return redirect('marketplace_home')
+
+    return redirect('marketplace_home')

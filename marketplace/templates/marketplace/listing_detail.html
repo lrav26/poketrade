@@ -41,6 +41,13 @@
       <button type="submit" class="btn btn-success btn-lg">Buy Now</button>
     </form>
 
+      {% if request.user == listing.seller %}
+      <form method="post" action="{% url 'cancel_listing' listing.id %}" class="mb-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Cancel Listing</button>
+      </form>
+      {% endif %}
+
     <!-- Back to Marketplace Link -->
     <a href="{% url 'marketplace_home' %}" class="btn btn-outline-secondary">← Back to Marketplace</a>
 
