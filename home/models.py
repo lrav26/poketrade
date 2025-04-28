@@ -28,6 +28,10 @@ class Pokemon(models.Model):
     type = models.CharField(max_length=100)
     hp = models.IntegerField()
     attack = models.IntegerField()
+    defense = models.IntegerField(default=0)
+    sp_attack = models.IntegerField(default=0)
+    sp_defense = models.IntegerField(default=0)
+    speed = models.IntegerField(default=0)
     image_url = models.URLField()
     nickname = models.CharField(max_length=100, blank=True)
 

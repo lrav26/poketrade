@@ -9,11 +9,16 @@ def fetch_random_pokemon():
 
     if res.status_code == 200:
         data = res.json()
+        stats = {s["stat"]["name"]: s["base_stat"] for s in data["stats"]}
         return {
             "name": data["name"].capitalize(),
             "type": data["types"][0]["type"]["name"].capitalize(),
-            "hp": data["stats"][0]["base_stat"],
-            "attack": data["stats"][1]["base_stat"],
+            "hp": stats.get("hp", 0),
+            "attack": stats.get("attack", 0),
+            "defense": stats.get("defense", 0),
+            "sp_attack": stats.get("special-attack", 0),
+            "sp_defense": stats.get("special-defense", 0),
+            "speed": stats.get("speed", 0),
             "image_url": data["sprites"]["other"]["official-artwork"]["front_default"]
         }
     return None
