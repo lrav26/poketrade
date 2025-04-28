@@ -3,70 +3,70 @@
 
 {% block content %}
 <div class="container">
-    <div class="mb-4 mt-4">
-      <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">Your Collection</h1>
-    </div>
+  <div class="mb-4 mt-4">
+    <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">Your Collection</h1>
+  </div>
 
-    {% if user.is_superuser %}
-    <!-- Add Pokémon Form: Only visible to admins -->
-    <div class="mb-5">
-      <form method="POST" class="d-flex align-items-center gap-3">
-        {% csrf_token %}
-        <label for="pokemon_id" class="form-label mb-0" style="color: #3b3e47;">Add Pokémon by ID:</label>
-        <input type="number" name="pokemon_id" id="pokemon_id" min="1" max="898" required class="form-control" style="max-width: 100px;">
-        <button type="submit" class="btn btn-primary">Add</button>
-      </form>
-    </div>
-    {% endif %}
+  {% if user.is_superuser %}
+  <div class="mb-5">
+    <form method="POST" class="d-flex align-items-center gap-3">
+      {% csrf_token %}
+      <label for="pokemon_id" class="form-label mb-0" style="color: #3b3e47;">Add Pokémon by ID:</label>
+      <input type="number" name="pokemon_id" id="pokemon_id" min="1" max="898" required class="form-control" style="max-width: 100px;">
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
+  {% endif %}
 
-    <!-- Pokémon Grid -->
-    <div class="grid-5">
-      {% for p in pokemons %}
-        <div class="card-container">
-          <div class="card-inner">
+  <!-- Pokémon Grid -->
+  <div class="grid-5">
+    {% for p in pokemons %}
+    <div class="card-container">
+      <div class="card-inner">
 
-            <!-- Card Front -->
-            <div class="card-front type-{{ p.type|lower }}">
-              <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
-              <div class="pokemon-text">
-                <div class="pokemon-name">{{ p.name }}</div>
-                {% if p.nickname %}
-                  <div class="pokemon-nickname">"{{ p.nickname }}"</div>
-                {% endif %}
-              </div>
-            </div>
-
-            <!-- Card Back -->
-            <div class="card-back">
-              <h5>{{ p.name }}'s Stats</h5>
-              <p>
-                <strong>Type:</strong> {{ p.type }}<br>
-                <strong>HP:</strong> {{ p.hp }}<br>
-                <strong>Attack:</strong> {{ p.attack }}
-              </p>
-
-              <!-- Nickname Form -->
-              <div class="nickname-form mt-2">
-                <form method="POST" action="{% url 'nickname_update' p.id %}" class="text-center">
-                  {% csrf_token %}
-                  <input type="text" name="nickname" placeholder="New nickname" class="nickname-input form-control mb-2" maxlength="20">
-                  <button type="submit" class="btn btn-sm btn-outline-success">Save</button>
-                </form>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="mt-2 d-flex flex-column gap-2">
-                <a href="{% url 'create_listing' p.id %}" class="btn btn-outline-primary btn-sm">List for Sale</a>
-                <a href="{% url 'list_pokemon_for_trade' p.id %}" class="btn btn-outline-success btn-sm">List for Trade</a>
-              </div>
-            </div>
+        <!-- Card Front -->
+        <div class="card-front type-{{ p.type|lower }}">
+          <div class="pokemon-name">{{ p.name }}</div>
+          {% if p.nickname %}
+            <div class="pokemon-nickname">“{{ p.nickname }}”</div>
+          {% endif %}
+          <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
+          <div class="pokemon-stats-front">
+            <p><strong>Type:</strong> {{ p.type }}</p>
+            <p><strong>HP:</strong> {{ p.hp }}</p>
+            <p><strong>Attack:</strong> {{ p.attack }}</p>
+            <p><strong>Defense:</strong> {{ p.defense }}</p>
+            <p><strong>Sp. Atk:</strong> {{ p.sp_attack }}</p>
+            <p><strong>Sp. Def:</strong> {{ p.sp_defense }}</p>
+            <p><strong>Speed:</strong> {{ p.speed }}</p>
           </div>
         </div>
-      {% empty %}
-        <div class="col-12 text-center">
-          <p>You have no Pokémon yet!</p>
+
+        <!-- Card Back -->
+        <div class="card-back type-{{ p.type|lower }}">
+          <img src="{% static 'img/pokeball.png' %}" alt="Pokéball" class="pokeball-icon">
+          <!-- Nickname Form -->
+          <div class="nickname-form mt-3">
+            <form method="POST" action="{% url 'nickname_update' p.id %}">
+              {% csrf_token %}
+              <input type="text" name="nickname" placeholder="New nickname" class="nickname-input form-control mb-3" maxlength="20" style="font-size: 1rem; padding: 0.375rem 0.75rem; border-radius: 0.375rem; border: 1px solid #ced4da;">
+              <button type="submit" class="btn btn-success btn-sm w-100">Save</button>
+            </form>
+          </div>
+
+          <!-- List for Sale Button -->
+          <div class="mt-3">
+            <a href="{% url 'create_listing' p.id %}" class="btn btn-primary btn-sm w-100">List for Sale</a>
+          </div>
         </div>
-      {% endfor %}
+
+      </div> <!-- End Card Inner -->
+    </div> <!-- End Card Container -->
+    {% empty %}
+    <div class="col-12 text-center">
+      <p>You have no Pokémon yet!</p>
     </div>
+    {% endfor %}
+  </div> <!-- End Grid -->
 </div>
 {% endblock content %}
