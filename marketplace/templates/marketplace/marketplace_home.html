@@ -2,55 +2,58 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-  <div class="mb-4 mt-4">
-    <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">Marketplace</h1>
-  </div>
-
-  {% if listings %}
-    <div class="grid-5">
-      {% for listing in listings %}
-        <div class="card-container">
-          <div class="card-inner">
-
-            <!-- Card Front -->
-            <div class="card-front type-{{ listing.pokemon.type|lower }}">
-              <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
-              <div class="pokemon-text">
-                <div class="pokemon-name">{{ listing.pokemon.name }}</div>
-                {% if listing.pokemon.nickname %}
-                  <div class="pokemon-nickname">"{{ listing.pokemon.nickname }}"</div>
-                {% endif %}
-              </div>
-            </div>
-
-            <!-- Card Back -->
-            <div class="card-back">
-              <h5>{{ listing.pokemon.name }}'s Stats</h5>
-              <p>
-                <strong>Type:</strong> {{ listing.pokemon.type }}<br>
-                <strong>HP:</strong> {{ listing.pokemon.hp }}<br>
-                <strong>Attack:</strong> {{ listing.pokemon.attack }}<br>
-                <strong>Price:</strong> ${{ listing.price }}
-              </p>
-
-              <!-- Action Button -->
-              <div class="mt-2 d-flex flex-column gap-2">
-                <a href="{% url 'marketplace_listing_detail' listing.id %}" class="btn btn-outline-primary btn-sm">
-                  View Listing
-                </a>
-              </div>
-
-            </div>
-
-          </div>
+    <div class="container">
+        <div class="mb-4 mt-4">
+          <h1 style="border-bottom: 3px solid #3d3d47; display: inline-block; color: #3b3e47;">Marketplace</h1>
         </div>
-      {% endfor %}
+
+        <!-- Pokémon Grid -->
+        <div class="grid-5">
+          {% for listing in listings %}
+            <div class="card-container">
+              <div class="card-inner">
+                <div class="card-front type-{{ listing.pokemon.type|lower }}">
+                  <div class="pokemon-name">{{ listing.pokemon.name }}</div>
+
+                  <div class="pokemon-price">
+                    ${{ listing.price }}
+                  </div>
+
+                  <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
+
+                  <div class="pokemon-stats-front">
+                    <p><strong>Type:</strong> {{ listing.pokemon.type }}</p>
+                    <p><strong>HP:</strong> {{ listing.pokemon.hp }}</p>
+                    <p><strong>Attack:</strong> {{ listing.pokemon.attack }}</p>
+                    <p><strong>Defense:</strong> {{ listing.pokemon.defense }}</p>
+                    <p><strong>Sp. Atk:</strong> {{ listing.pokemon.sp_attack }}</p>
+                    <p><strong>Sp. Def:</strong> {{ listing.pokemon.sp_defense }}</p>
+                    <p><strong>Speed:</strong> {{ listing.pokemon.speed }}</p>
+                  </div>
+                </div>
+                <div class="card-back type-{{ listing.pokemon.type|lower }}">
+                  <!-- Pokéball Icon -->
+                  <img src="{% static 'img/pokeball.png' %}" alt="Pokéball" class="pokeball-icon">
+
+                  <!-- Big Price -->
+                  <h2 class="marketplace-price">
+                    ${{ listing.price }}
+                  </h2>
+
+                  <!-- View Listing Button -->
+                  <div class="mt-4 d-flex justify-content-center">
+                    <a href="{% url 'marketplace_listing_detail' listing.id %}" class="btn btn-outline-primary btn-lg" style="font-weight: bold; border: 2px solid gold;">
+                      View Listing
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <div class="col-12 text-center">
+              <p>No listings available.</p>
+            </div>
+          {% endfor %}
+        </div>
     </div>
-  {% else %}
-    <div class="text-center mt-5">
-      <p>No listings available right now!</p>
-    </div>
-  {% endif %}
-</div>
 {% endblock content %}
