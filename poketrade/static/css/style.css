@@ -526,4 +526,532 @@ main {
   animation: coinPulse 0.6s ease;
 }
 
+/* --- Base Styles --- */
+
+.bg-index {
+  background: url("/static/img/background.jpg") no-repeat fixed;
+  background-size: 100% auto;
+}
+
+.navbar a.nav-link {
+  color: #FFFEF6 !important;
+}
+
+.bg-dark {
+  background-color: #000000 !important;
+}
+
+.ms-footer {
+  background-color: #202020;
+}
+.ms-footer p {
+  color: #E8E8E8;
+  font-size: 13px;
+}
+.ms-footer a:hover {
+  color: #6ab43e;
+  text-decoration: none;
+}
+.ms-footer-bottom span {
+  font-size: 13px;
+  line-height: 38px;
+}
+.ms-footer-bottom a {
+  color: #6ab43e;
+  text-decoration: none;
+}
+.ms-footer-bottom a:hover {
+  color: #fff;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+main {
+  flex-grow: 1;
+  color: #fff;
+}
+
+/* --- Collection Grid --- */
+.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  margin-top: 2rem;
+}
+
+/* --- Card Layout --- */
+.card-container {
+  perspective: 1200px;
+  width: 220px;
+  height: 320px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  transform-origin: center;
+}
+
+.card-container:hover .card-inner {
+  transform: rotateY(180deg) translateY(-5px);
+}
+
+/* --- Card Faces --- */
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-front {
+  background: none;
+  border: 5px solid gold;
+  padding: 0px;
+  z-index: 1;
+}
+
+.card-back {
+  background: lightgrey;
+  padding: 1rem;
+  transform: rotateY(180deg);
+  border: 5px solid gold;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
+
+/* --- Name and Nickname --- */
+.pokemon-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  text-align: left;
+  text-shadow: 0 0 6px white;
+}
+
+.pokemon-nickname {
+  font-size: 1rem;
+  font-style: italic;
+  color: black;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  text-align: right;
+  text-shadow: 0 0 6px white;
+}
+
+/* --- Image --- */
+.pokemon-img {
+  width: 80%;
+  height: 150px;
+  object-fit: contain;
+  margin: 2rem auto 0 auto;
+  padding: 5px;
+  border: 2px solid gold;
+  border-radius: 8px;
+  background-color: white;
+}
+
+/* --- Stats on Front --- */
+.pokemon-stats-front {
+  font-size: 0.7rem; /* slightly bigger */
+  line-height: 1.1;
+  color: black;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0.4rem;
+  row-gap: 0.2rem;
+  width: 92%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0.4rem 0.5rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.pokemon-stats-front p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: 0.75rem; /* make each stat slightly bigger than box default */
+}
+
+/* --- Back Card Content --- */
+.card-back h5 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  text-align: center;
+}
+
+.card-back p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.25rem 0;
+  text-align: center;
+}
+
+.nickname-form {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.nickname-input {
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1rem;
+  border: 2px solid gold;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #fdfdfd;
+}
+
+/* --- Pokéball Icon on Card Back --- */
+.pokeball-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 40px;
+  height: 40px;
+  opacity: 0.9;
+}
+
+/* --- Freshened Buttons on Back --- */
+.card-back .btn-success {
+  background-color: #4CAF50;
+  border: 2px solid gold;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+}
+
+.card-back .btn-primary {
+  background-color: #007bff;
+  border: 2px solid gold;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+}
+
+.card-back .btn-success:hover,
+.card-back .btn-primary:hover {
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+}
+
+/* --- Text Styling on Front --- */
+.type-inner h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.type-inner small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* --- Nickname Form on Back --- */
+.nickname-form {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.nickname-input {
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 0.85rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* ==================== TYPE-SPECIFIC BACKGROUNDS ==================== */
+
+/* --- Fire --- */
+.type-fire {
+  background: linear-gradient(135deg, #f12711, #f5af19);
+}
+.type-fire:hover {
+  box-shadow: 0 0 15px #f5af19;
+}
+
+/* --- Water --- */
+.type-water {
+  background: linear-gradient(135deg, #36D1DC, #5B86E5);
+}
+.type-water:hover {
+  box-shadow: 0 0 15px #5B86E5;
+}
+
+/* --- Grass --- */
+.type-grass {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+.type-grass:hover {
+  box-shadow: 0 0 15px #38ef7d;
+}
+
+/* --- Electric --- */
+.type-electric {
+  background: linear-gradient(135deg, #FCE38A, #F38181);
+  color: #333;
+}
+.type-electric:hover {
+  box-shadow: 0 0 15px #FCE38A;
+}
+
+/* --- Psychic --- */
+.type-psychic {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+}
+.type-psychic:hover {
+  box-shadow: 0 0 15px #fbc2eb;
+}
+
+/* --- Ice --- */
+.type-ice {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+}
+.type-ice:hover {
+  box-shadow: 0 0 15px #c2e9fb;
+}
+
+/* --- Dragon --- */
+.type-dragon {
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+}
+.type-dragon:hover {
+  box-shadow: 0 0 15px #4b6cb7;
+}
+
+/* --- Dark --- */
+.type-dark {
+  background: linear-gradient(135deg, #232526, #414345);
+}
+.type-dark:hover {
+  box-shadow: 0 0 15px #414345;
+}
+
+/* --- Fairy --- */
+.type-fairy {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+.type-fairy:hover {
+  box-shadow: 0 0 15px #fad0c4;
+}
+
+/* --- Bug --- */
+.type-bug {
+  background: linear-gradient(135deg, #56ab2f, #a8e063);
+}
+.type-bug:hover {
+  box-shadow: 0 0 15px #a8e063;
+}
+
+/* --- Rock --- */
+.type-rock {
+  background: linear-gradient(135deg, #b79891, #94716b);
+}
+.type-rock:hover {
+  box-shadow: 0 0 15px #94716b;
+}
+
+/* --- Steel --- */
+.type-steel {
+  background: linear-gradient(135deg, #7f8c8d, #bdc3c7);
+}
+.type-steel:hover {
+  box-shadow: 0 0 15px #bdc3c7;
+}
+
+/* --- Ghost --- */
+.type-ghost {
+  background: linear-gradient(135deg, #5f2c82, #49a09d);
+}
+.type-ghost:hover {
+  box-shadow: 0 0 15px #5f2c82;
+}
+
+/* --- Poison --- */
+.type-poison {
+  background: linear-gradient(135deg, #9d50bb, #6e48aa);
+}
+.type-poison:hover {
+  box-shadow: 0 0 15px #9d50bb;
+}
+
+/* --- Ground --- */
+.type-ground {
+  background: linear-gradient(135deg, #ba8b02, #181818);
+}
+.type-ground:hover {
+  box-shadow: 0 0 15px #ba8b02;
+}
+
+/* --- Fighting --- */
+.type-fighting {
+  background: linear-gradient(135deg, #c94b4b, #4b134f);
+}
+.type-fighting:hover {
+  box-shadow: 0 0 15px #c94b4b;
+}
+
+/* --- Flying --- */
+.type-flying {
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+}
+.type-flying:hover {
+  box-shadow: 0 0 15px #66a6ff;
+}
+
+/* --- Normal --- */
+.type-normal {
+  background: linear-gradient(135deg, #d3cce3, #e9e4f0);
+}
+.type-normal:hover {
+  box-shadow: 0 0 15px #d3cce3;
+}
+
+/* --- Default fallback --- */
+.type-inner:not([class*="type-"]) {
+  background: #f0f0f0;
+}
+
+.card-back h5 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  text-align: center;
+}
+
+.card-back p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.25rem 0;
+  text-align: center;
+}
+.card-back h5, .card-back p {
+  width: 100%;
+  text-align: center;
+}
+
+@keyframes goldShimmer {
+  0% {
+    border-color: gold;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    border-color: #ffd700; /* richer gold */
+    box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    border-color: gold;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+}
+.card-front, .card-back {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-container:hover .card-front,
+.card-container:hover .card-back {
+  box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.7);
+  border-color: #ffd700;
+}
+
+.custom-bg-1 {
+  background-color: #FB6362; /* light gray */
+}
+.custom-bg-2 {
+  background-color: #ff0000; /* Bootstrap blue */
+  color: white;
+}
+.custom-bg-3 {
+  background-color: #ffc107; /* Bootstrap yellow */
+}
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 70vh; /* Adjustable height, 70% of viewport height */
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3); /* Optional: adds a slight dark overlay */
+}
+
+.hero-overlay h1 {
+    color: white;
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.pokemon-price {
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-shadow: 0px 0px 4px white;
+}
+
+.marketplace-price {
+  margin-top: 3rem;
+  font-size: 2rem;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  text-shadow: 0px 0px 4px white;
+}
 
