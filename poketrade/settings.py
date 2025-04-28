@@ -38,7 +38,7 @@ EMAIL_USE_SSL = False  # Set this to False since we're using TLS, not SSL
 EMAIL_HOST_USER = 'valeriaitsko@gmail.com'  # Replace with your Gmail address
 EMAIL_HOST_PASSWORD = 'urft jdxp ahtm lpzr'  # Replace with your Gmail password (or App Password)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default sender address
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -133,6 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
