@@ -140,7 +140,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    BASE_DIR / 'poketrade/static/',
-]
+#STATICFILES_DIRS = [
+ #   BASE_DIR / "static",
+  #  BASE_DIR / 'poketrade/static/',
+#]
