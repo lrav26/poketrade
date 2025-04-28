@@ -1,38 +1,25 @@
 {% extends 'base.html' %}
+{% include 'home/pokemon_card_front.html' %}
 {% load static %}
 
 {% block content %}
+    <style>
+      .card-inner {
+        transform: none !important;
+        transition: none !important;
+      }
+      .card-container:hover .card-inner {
+        transform: none !important;
+      }
+    </style>
 <div class="container py-4">
   <div class="d-flex flex-column align-items-center">
 
     <!-- Pokémon Card -->
     <div class="card-container" style="margin-bottom: 1.5rem;">
-      <div class="card-inner">
-
-        <!-- Card Front -->
-        <div class="card-front type-{{ listing.pokemon.type|lower }}">
-          <img src="{{ listing.pokemon.image_url }}" alt="{{ listing.pokemon.name }}" class="pokemon-img">
-          <div class="pokemon-text">
-            <div class="pokemon-name">{{ listing.pokemon.name }}</div>
-            {% if listing.pokemon.nickname %}
-              <div class="pokemon-nickname">"{{ listing.pokemon.nickname }}"</div>
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- Card Back -->
-        <div class="card-back">
-          <h5>{{ listing.pokemon.name }}'s Stats</h5>
-          <p>
-            <strong>Type:</strong> {{ listing.pokemon.type }}<br>
-            <strong>HP:</strong> {{ listing.pokemon.hp }}<br>
-            <strong>Attack:</strong> {{ listing.pokemon.attack }}<br>
-            <strong>Seller:</strong> {{ listing.seller.username }}<br>
-            <strong>Price:</strong> ${{ listing.price }}
-          </p>
-        </div>
-
-      </div>
+      {% with p=listing.pokemon %}
+        {% include 'home/pokemon_card_front.html' %}
+      {% endwith %}
     </div>
 
     <!-- Buy Button UNDER the card -->
