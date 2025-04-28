@@ -14,8 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-ALLOWED_HOSTS = ['zohaa.pythonanywhere.com',
-                 'localhost', '127.0.0.1']
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -39,7 +38,7 @@ EMAIL_USE_SSL = False  # Set this to False since we're using TLS, not SSL
 EMAIL_HOST_USER = 'valeriaitsko@gmail.com'  # Replace with your Gmail address
 EMAIL_HOST_PASSWORD = 'urft jdxp ahtm lpzr'  # Replace with your Gmail password (or App Password)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default sender address
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['zohaa.pythonanywhere.com','localhost', '127.0.0.1']
 
 
 # Application definition
