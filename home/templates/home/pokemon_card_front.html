@@ -1,0 +1,20 @@
+<div class="card-container">
+  <div class="card-inner">
+    <div class="card-front type-{{ p.type|lower }}">
+      <div class="pokemon-name">{{ p.name }}</div>
+      {% if p.nickname %}
+        <div class="pokemon-nickname">“{{ p.nickname }}”</div>
+      {% endif %}
+      <img src="{{ p.image_url }}" alt="{{ p.name }}" class="pokemon-img">
+      <div class="pokemon-stats-front">
+        <p><strong>Type:</strong> {{ p.type }}</p>
+        <p><strong>HP:</strong> {{ p.hp }}</p>
+        <p><strong>Attack:</strong> {{ p.attack }}</p>
+        <p><strong>Defense:</strong> {{ p.defense }}</p>
+        <p><strong>Sp. Atk:</strong> {{ p.sp_attack }}</p>
+        <p><strong>Sp. Def:</strong> {{ p.sp_defense }}</p>
+        <p><strong>Speed:</strong> {{ p.speed }}</p>
+      </div>
+    </div>
+  </div>
+</div>

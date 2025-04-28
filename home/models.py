@@ -19,6 +19,10 @@ def give_new_user_starter_pack(sender, instance, created, **kwargs):
                 type=poke["type"],
                 hp=poke["hp"],
                 attack=poke["attack"],
+                defense=poke["defense"],
+                sp_attack=poke["sp_attack"],
+                sp_defense=poke["sp_defense"],
+                speed=poke["speed"],
                 image_url=poke["image_url"]
             )
 
